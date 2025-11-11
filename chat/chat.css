@@ -1,0 +1,428 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* --- VARIÁVEIS DE TEMA --- */
+:root {
+    --bg-light: #f0f0f5;
+    --text-dark: #fff; /* Usado no Dark Mode */
+    --text-light: #141e30;
+    --primary-color: #64b2f1;
+    --card-bg-light: #ffffff;
+    --border-color-light: #ccc;
+}
+
+/* --- TEMA CLARO (APLICAÇÃO) --- */
+body.theme-light {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+/* Adaptações do tema claro para elementos comuns: */
+.theme-light .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.theme-light .settings-container, 
+.theme-light .notification-list, /* Para notificacoes.css */
+.theme-light .politica-container, /* Para politica_privacidade.css */
+.theme-light footer {
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-light);
+}
+
+/* Garante que o texto de títulos e links não desapareça no fundo claro */
+.theme-light .logo, 
+.theme-light .page-title, 
+.theme-light .block-title,
+.theme-light .nav-links li a {
+    color: var(--text-light);
+}
+.theme-light .nav-links li.active a {
+    color: var(--text-dark); /* Texto branco no link ativo azul */
+}
+/* ... Adapte outras classes específicas de card/fundo conforme necessário para cada tela. */* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar (padrão mantido) */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #64b2f1;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.nav-links li a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #64b2f1;
+}
+
+/* NOVO: Estilo para o link da página atual na navbar */
+.nav-links li.active a {
+    background: #64b2f1;
+    color: #141e30;
+    font-weight: 700;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.search-box input {
+    border: none;
+    background: transparent;
+    color: #fff;
+    padding: 5px;
+    width: 160px;
+    outline: none;
+}
+
+.search-box button {
+    border: none;
+    background: none;
+    color: #64b2f1;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* ===== MAIN ===== */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 90px 40px 70px 40px;
+}
+
+/* ===== CHAT CONTAINER ===== */
+.chat-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 95%;
+    max-width: 1400px;
+    height: calc(100vh - 160px);
+    background: rgba(255,255,255,0.04);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    overflow: hidden;
+    backdrop-filter: blur(6px);
+}
+
+/* ===== SIDEBAR ===== */
+.chat-sidebar {
+    width: 320px;
+    background: rgba(255,255,255,0.03);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out; /* Adiciona transição para responsividade */
+}
+
+.chat-sidebar h2 {
+    text-align: left;
+    padding: 20px;
+    background: rgba(255,255,255,0.06);
+    color: #64b2f1;
+    font-weight: 500;
+}
+
+.chat-sidebar ul {
+    list-style: none;
+    overflow-y: auto;
+    flex: 1;
+    padding: 0;
+}
+
+.chat-sidebar li {
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #d0d8e6;
+    transition: 0.2s;
+    user-select: none;
+}
+
+.chat-sidebar li:hover,
+.chat-sidebar li.active {
+    background: rgba(255,255,255,0.04);
+    color: #64b2f1;
+}
+
+/* ===== CHAT WINDOW ===== */
+.chat-window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, rgba(22,26,36,0.7), rgba(24,28,38,0.85));
+    height: 100%;
+    position: relative; /* Para o botão de toggle */
+}
+
+/* Header */
+.chat-header {
+    background: rgba(255,255,255,0.03);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Novo: Botão para abrir sidebar no mobile */
+.toggle-sidebar-btn {
+    background: none;
+    border: none;
+    color: #64b2f1;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.chat-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-user i {
+    font-size: 1.6em;
+    color: #64b2f1;
+}
+
+.chat-user h3 {
+    margin: 0;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Messages */
+.chat-messages {
+    flex: 1;
+    padding: 22px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    /* Estilização da scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 178, 241, 0.4) transparent;
+}
+
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 178, 241, 0.4);
+    border-radius: 10px;
+}
+
+.message {
+    max-width: 68%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    position: relative;
+    animation: fadeIn 0.25s ease;
+    word-wrap: break-word;
+}
+
+.message.sent {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #64b2f1, #4e8fd5);
+    color: #fff;
+    margin-right: 15px; /* Espaço para o carimbo de data/hora */
+}
+
+.message.received {
+    align-self: flex-start;
+    background: rgba(255,255,255,0.06);
+    color: #e9eefb;
+    margin-left: 15px; /* Espaço para o carimbo de data/hora */
+}
+
+.message span {
+    font-size: 0.72em;
+    color: #bfc7d6;
+    position: absolute;
+    bottom: -18px;
+}
+
+.message.sent span {
+    right: 0;
+    color: #d8f0ff; /* Cor mais clara para contraste com o fundo azul */
+}
+
+.message.received span {
+    left: 0;
+}
+
+/* Input */
+.chat-input {
+    display: flex;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    align-items: center;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.08); /* Aumentado o contraste do input */
+    color: #fff;
+    font-size: 0.95em;
+    outline: none;
+    transition: 0.3s;
+}
+
+.chat-input input:focus {
+    box-shadow: 0 0 0 2px #64b2f1;
+}
+
+.chat-input button {
+    background: #64b2f1;
+    border: none;
+    color: white;
+    padding: 10px 14px;
+    margin-left: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.18s;
+    flex-shrink: 0;
+}
+
+.chat-input button:hover {
+    transform: scale(1.05);
+    background: #55a0e0;
+}
+
+/* Footer (padrão mantido) */
+footer {
+    background: rgba(255,255,255,0.04);
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+    color: #aab6c6;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    z-index: 1000;
+}
+
+/* RESPONSIVO (Mobile First) */
+@media (max-width: 900px) {
+    /* Navbar responsiva (mantendo o padrão da Home/Perfil) */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+        height: auto;
+    }
+    .nav-links {
+        display: none; 
+    }
+    .search-box {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    /* Main Content */
+    main { 
+        padding: 150px 0 0 0; /* Mais espaço para o navbar expandido */
+        align-items: flex-start;
+    }
+
+    .chat-container { 
+        flex-direction: column; 
+        width: 100%;
+        height: calc(100vh - 150px);
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    /* Sidebar no Mobile */
+    .chat-sidebar { 
+        width: 100%; 
+        position: absolute;
+        height: 100%;
+        z-index: 200;
+        transform: translateX(-100%); /* Oculta a sidebar por padrão */
+        border-right: none;
+    }
+
+    .chat-sidebar.active {
+        transform: translateX(0); /* Exibe a sidebar quando ativa */
+    }
+
+    .chat-window {
+        width: 100%;
+    }
+    
+    /* Mostrar botão de abrir sidebar no mobile */
+    #openSidebarBtn {
+        display: block !important;
+    }
+
+    /* Estilizando o botão de fechar dentro da sidebar (visível apenas no mobile) */
+    #closeSidebarBtn {
+        display: block !important;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: #e74c3c;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+}

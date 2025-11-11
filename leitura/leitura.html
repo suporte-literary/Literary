@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="/leitura/Auth.js"></script> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Literary | Lendo Obra...</title>
+    <link rel="stylesheet" href="leitura.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="theme-dark"> 
+    
+    <header class="leitura-header">
+        <div class="left-controls">
+            <a href="/home/home.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            <h1 id="bookTitleHeader">Carregando Título...</h1>
+            <button id="indexBtn" class="index-toggle" aria-label="Abrir Índice de Capítulos">
+                <i class="fas fa-list-ul"></i>
+            </button>
+        </div>
+        
+        <div class="right-controls">
+            <button id="toggleSettingsBtn" aria-label="Configurações de Leitura">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-content">
+            <h3>Personalizar Leitura</h3>
+
+            <div class="setting-group">
+                <label>Tamanho da Fonte:</label>
+                <div class="font-size-controls">
+                    <button id="decreaseFontBtn">A-</button>
+                    <span id="currentFontSize">Padrão</span>
+                    <button id="increaseFontBtn">A+</button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label>Tema:</label>
+                <div class="theme-controls">
+                    <button id="themeDarkBtn" class="theme-btn dark active" data-theme="dark" title="Escuro"></button>
+                    <button id="themeSepiaBtn" class="theme-btn sepia" data-theme="sepia" title="Sépia"></button>
+                    <button id="themeLightBtn" class="theme-btn light" data-theme="light" title="Claro"></button>
+                </div>
+            </div>
+
+            </div>
+    </div>
+    
+    <div class="index-modal" id="indexModal">
+        <div class="index-content">
+            <h3 id="indexTitle">Índice de Capítulos</h3>
+            <ul id="chapterList">
+                </ul>
+        </div>
+    </div>
+    
+    <main class="reading-area">
+        <article id="bookContent">
+            <p>Você chegou ao fim desse capítulo...</p>
+        </article>
+    </main>
+    
+    <nav class="chapter-navigation">
+        <button id="prevChapterBtn" class="nav-btn disabled" disabled>
+            <i class="fas fa-arrow-left"></i> Anterior
+        </button>
+        <button id="nextChapterBtn" class="nav-btn" disabled>
+            Próximo <i class="fas fa-arrow-right"></i>
+        </button>
+    </nav>
+
+    <script src="leitura.js"></script>
+</body>
+</html>

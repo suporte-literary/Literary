@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* --- VARIÁVEIS DE TEMA --- */
+:root {
+    --bg-light: #f0f0f5;
+    --text-dark: #fff; /* Usado no Dark Mode */
+    --text-light: #141e30;
+    --primary-color: #64b2f1;
+    --card-bg-light: #ffffff;
+    --border-color-light: #ccc;
+}
+
+/* --- TEMA CLARO (APLICAÇÃO) --- */
+body.theme-light {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+/* Adaptações do tema claro para elementos comuns: */
+.theme-light .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.theme-light .settings-container, 
+.theme-light .notification-list, /* Para notificacoes.css */
+.theme-light .politica-container, /* Para politica_privacidade.css */
+.theme-light footer {
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-light);
+}
+
+/* Garante que o texto de títulos e links não desapareça no fundo claro */
+.theme-light .logo, 
+.theme-light .page-title, 
+.theme-light .block-title,
+.theme-light .nav-links li a {
+    color: var(--text-light);
+}
+.theme-light .nav-links li.active a {
+    color: var(--text-dark); /* Texto branco no link ativo azul */
+}
+/* ... Adapte outras classes específicas de card/fundo conforme necessário para cada tela. */* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar (Mantida) */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+.logo { font-weight: 700; font-size: 1.3rem; color: #64b2f1; }
+.nav-links { list-style: none; display: flex; gap: 15px; }
+.nav-links li a { color: #fff; text-decoration: none; font-size: 0.95rem; padding: 8px 12px; border-radius: 6px; transition: 0.3s; }
+.nav-links li a:hover { background: rgba(255, 255, 255, 0.15); color: #64b2f1; }
+.nav-links li.active a { background: #64b2f1; color: #141e30; font-weight: 700; }
+.search-box { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 5px 10px; }
+.search-box input { border: none; background: transparent; color: #fff; padding: 5px; width: 160px; outline: none; }
+.search-box button { border: none; background: none; color: #64b2f1; cursor: pointer; font-size: 1rem; }
+
+/* PRINCIPAL ALTERAÇÃO: Layout do Conteúdo */
+.home-content {
+    flex: 1;
+    /* Ajustado para centralizar e dar um respiro lateral como no print */
+    padding: 120px 5% 60px; 
+    max-width: 1400px; /* Limita a largura máxima */
+    margin: 0 auto; /* Centraliza na tela */
+    width: 100%;
+    text-align: left; /* Alinha o conteúdo à esquerda */
+}
+
+/* Novo estilo para títulos de categoria */
+.category-title {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 5px;
+    padding-left: 5px; /* Alinhamento visual */
+}
+.category-description {
+    color: #ccc;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    padding-left: 5px;
+}
+
+/* Novo Contêiner de Obras (Substitui o grid-container fixo) */
+.category-books-container {
+    display: flex;
+    overflow-x: auto; /* Permite rolar horizontalmente se for maior que a tela */
+    gap: 20px;
+    padding: 10px 5px 30px 5px; /* Padding extra para rolar e visualização */
+    /* Estilo para a barra de rolagem (opcional, apenas para navegadores webkit) */
+    scrollbar-width: thin;
+    scrollbar-color: #64b2f1 #1f2a44;
+}
+.category-books-container::-webkit-scrollbar {
+    height: 8px;
+}
+.category-books-container::-webkit-scrollbar-thumb {
+    background-color: #64b2f1;
+    border-radius: 10px;
+}
+.category-books-container::-webkit-scrollbar-track {
+    background: #1f2a44;
+}
+
+/* Estilo do Card do Livro */
+.book {
+    width: 120px; /* Capas um pouco maiores que antes */
+    flex-shrink: 0; /* Impede que o item encolha */
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+.book:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(100, 178, 241, 0.6); 
+}
+
+.book img {
+    width: 100%;
+    height: 180px; /* Altura ajustada */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.book-title {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-tags {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+/* Estilo das Tags Abaixo da Capa */
+.book-tags span {
+    background: rgba(100, 178, 241, 0.3);
+    color: #64b2f1;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+/* --- Estilos do Modal (Pré-Leitura) --- */
+/* Mantidos da versão anterior para funcionar com o HTML */
+.modal { display: none; position: fixed; z-index: 2000; padding-top: 100px; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+.modal-content { background: #1f2a44; margin: auto; padding: 20px; border-radius: 12px; width: 80%; max-width: 850px; text-align: left; position: relative; }
+.pre-leitura-info { display: flex; gap: 30px; align-items: flex-start; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.pre-leitura-info img#modalCover { width: 180px; height: 270px; object-fit: cover; border-radius: 10px; flex-shrink: 0; margin-bottom: 0; }
+.info-text { flex-grow: 1; }
+.info-text h2#modalTitle { color: #64b2f1; font-size: 2rem; margin-bottom: 5px; }
+.author-name { color: #aaa; font-size: 1.1rem; margin-bottom: 20px; }
+.metadata { display: flex; flex-wrap: wrap; gap: 20px; color: #ccc; font-size: 0.9rem; margin-bottom: 20px; }
+.metadata i { color: #55efc4; margin-right: 5px; }
+.buttons { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.buttons button { border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 8px; flex-grow: 1; justify-content: center; min-width: 150px; }
+#btnLerObra { background: #64b2f1; color: #141e30; }
+#btnLerObra:hover { background: #55a0e0; }
+#btnAddToLibrary { background: #55efc4; color: #1c2838; }
+#btnAddToLibrary:hover { filter: brightness(0.9); }
+.buttons button[data-action="remove"] { background: #dc3545 !important; color: #fff !important; }
+.synopsis-area { margin-top: 20px; }
+.synopsis-area h3 { color: #ccc; margin-bottom: 10px; }
+.synopsis-area p#modalSynopsis { color: #fff; line-height: 1.6; margin-bottom: 15px; }
+.close-btn { position: absolute; top: 10px; right: 20px; font-size: 1.8rem; color: #fff; cursor: pointer; }
+.tags { margin-top: 10px; }
+.tags span { background: #64b2f1; color: #fff; padding: 5px 10px; border-radius: 8px; margin: 3px; display: inline-block; }
+
+
+footer {
+    background: rgba(255, 255, 255, 0.05);
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+    color: #aaa;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* MEDIA QUERIES para responsividade */
+@media (max-width: 600px) {
+    .navbar { flex-direction: column; align-items: flex-start; padding: 10px 20px; }
+    .nav-links { display: none; }
+    .search-box { margin-top: 10px; width: 100%; justify-content: space-between; }
+    .search-box input { width: 100%; }
+    .home-content { padding: 150px 20px 40px; }
+    
+    /* Layout do modal em mobile */
+    .pre-leitura-info { flex-direction: column; align-items: center; text-align: center; }
+    .buttons button { width: 100%; margin-bottom: 5px; }
+    .metadata { justify-content: center; text-align: center; }
+
+    /* Contêiner de livros em mobile */
+    .book { width: 100px; } /* Ajuste de volta para não ser muito grande */
+    .book img { height: 150px; }
+    .category-books-container { padding: 10px 0; }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .nav-links { gap: 10px; }
+    .book { width: 110px; }
+}

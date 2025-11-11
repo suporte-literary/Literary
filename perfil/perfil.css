@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* --- VARIÁVEIS DE TEMA --- */
+:root {
+    --bg-dark: linear-gradient(135deg, #141e30, #243b55);
+    --bg-light: #f0f0f5;
+    --text-dark: #fff;
+    --text-light: #141e30;
+    --primary-color: #64b2f1; /* Azul Claro */
+    --secondary-red: #6b1418; /* Vermelho escuro para borda do avatar */
+    --card-bg-dark: rgba(255, 255, 255, 0.05);
+    --card-bg-light: #ffffff;
+    --border-color-dark: rgba(100, 178, 241, 0.2);
+    --border-color-light: #ccc;
+}
+
+/* --- ESTILOS GERAIS/DARK MODE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", sans-serif; }
+body { 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh;
+    background: var(--bg-dark); 
+    color: var(--text-dark);
+}
+
+/* Estilos da Navbar (Assumindo que são os mesmos da Home e estão corretos) */
+.navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 30px; position: fixed; width: 100%; top: 0; z-index: 1000;
+}
+.logo { font-weight: 700; font-size: 1.3rem; color: var(--primary-color); }
+.nav-links { list-style: none; display: flex; gap: 15px; }
+.nav-links li a { color: var(--text-dark); text-decoration: none; font-size: 0.95rem; padding: 8px 12px; border-radius: 6px; transition: 0.3s; }
+.nav-links li.active a { background: var(--primary-color); color: var(--text-dark); font-weight: 700; }
+.search-box input { background: transparent; color: var(--text-dark); }
+.search-box button { color: var(--primary-color); }
+
+/* CORREÇÃO CRÍTICA DO LAYOUT: Garante Centralização */
+.wrapper {
+    flex: 1; 
+    /* Margem superior para pular a navbar fixa */
+    padding: 100px 5% 60px; 
+    /* Limita e centraliza o conteúdo */
+    max-width: 800px; 
+    margin: 0 auto; 
+    width: 100%;
+}
+
+.profile-container {
+    padding: 30px; border-radius: 12px;
+    background: var(--card-bg-dark); 
+    border: 1px solid var(--border-color-dark);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    width: 100%; /* Ocupa a largura total do wrapper (800px max) */
+}
+
+/* --- HEADER DO PERFIL --- */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ESTILO DO AVATAR (Para corrigir o tamanho e a borda dupla) */
+.avatar-box {
+    width: 150px; 
+    height: 150px;
+    flex-shrink: 0;
+}
+
+.profile-avatar-img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    border-radius: 50%;
+    
+    /* Borda Simples: Vermelho escuro */
+    border: 5px solid var(--secondary-red); 
+    
+    /* Borda Dupla: Azul claro */
+    box-shadow: 0 0 0 5px var(--primary-color); 
+    
+    transition: all 0.3s ease;
+}
+
+.profile-name {
+    font-size: 2rem;
+    margin: 0;
+    color: var(--primary-color);
+}
+.profile-username {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+.btn-edit-profile {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: #3a4a6b;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+.btn-edit-profile:hover {
+    background: #4a5c7f;
+}
+
+/* --- SEÇÕES DE CONTEÚDO --- */
+.section-title {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profile-description {
+    line-height: 1.6;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+.divider {
+    border: 0; height: 1px; margin: 30px 0; border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- TEMA CLARO: ADAPTAÇÕES --- */
+
+body.theme-light {
+    background: var(--bg-light); color: var(--text-light);
+}
+.theme-light .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border-color-light);
+}
+.theme-light .profile-container {
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color-light);
+}
+.theme-light .logo, 
+.theme-light .profile-name, 
+.theme-light .section-title,
+.theme-light .nav-links li a {
+    color: var(--text-light);
+}
+.theme-light .profile-avatar-img {
+    border: 5px solid var(--secondary-red); 
+    box-shadow: 0 0 0 5px var(--text-light); /* Borda externa escura */
+}
+.theme-light .profile-header {
+    border-bottom: 1px solid var(--border-color-light);
+}
+.theme-light .divider {
+    border-top: 1px solid var(--border-color-light);
+}
+.theme-light .profile-description {
+    color: var(--text-light);
+}
+.theme-light .profile-username {
+    color: #666;
+}
+.theme-light footer { background: #e0e0e0; color: #555; border-top: 1px solid #ccc; }
+
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+    .profile-header { flex-direction: column; text-align: center; }
+    .profile-info { text-align: center; }
+    .navbar { flex-direction: column; align-items: flex-start; padding: 10px 20px; }
+    .nav-links { display: none; }
+    .search-box { margin-top: 10px; width: 100%; justify-content: space-between; }
+}@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* --- VARIÁVEIS DE TEMA --- */
+:root {
+    --bg-dark: linear-gradient(135deg, #141e30, #243b55);
+    --bg-light: #f0f0f5;
+    --text-dark: #fff;
+    --text-light: #141e30;
+    --primary-color: #64b2f1; /* Azul Claro */
+    --secondary-red: #6b1418; /* Vermelho escuro para borda do avatar */
+    --card-bg-dark: rgba(255, 255, 255, 0.05);
+    --card-bg-light: #ffffff;
+    --border-color-dark: rgba(100, 178, 241, 0.2);
+    --border-color-light: #ccc;
+}
+
+/* --- ESTILOS GERAIS/DARK MODE --- */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", sans-serif; }
+body { 
+    display: flex; flex-direction: column; min-height: 100vh;
+    background: var(--bg-dark); color: var(--text-dark);
+}
+
+/* Estilos da Navbar */
+.navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 30px; position: fixed; width: 100%; top: 0; z-index: 1000;
+}
+.logo { font-weight: 700; font-size: 1.3rem; color: var(--primary-color); }
+.nav-links { list-style: none; display: flex; gap: 15px; }
+.nav-links li a { color: var(--text-dark); text-decoration: none; font-size: 0.95rem; padding: 8px 12px; border-radius: 6px; transition: 0.3s; }
+.nav-links li.active a { background: var(--primary-color); color: var(--text-dark); font-weight: 700; }
+.search-box input { background: transparent; color: var(--text-dark); border: none; outline: none;}
+.search-box button { background: none; border: none; color: var(--primary-color); cursor: pointer; }
+
+/* LAYOUT: Wrapper Centralizado */
+.wrapper {
+    flex: 1; 
+    padding: 100px 5% 60px; /* Compensa a navbar fixa */
+    max-width: 800px; /* Limite do Card */
+    margin: 0 auto; /* Centraliza o wrapper */
+    width: 100%;
+}
+
+.profile-container {
+    padding: 30px; border-radius: 12px;
+    background: var(--card-bg-dark); 
+    border: 1px solid var(--border-color-dark);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    width: 100%; 
+}
+
+/* --- HEADER DO PERFIL --- */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ESTILO DO AVATAR (Borda Dupla) */
+.avatar-box {
+    width: 150px; 
+    height: 150px;
+    flex-shrink: 0;
+}
+
+.profile-avatar-img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    border-radius: 50%;
+    
+    /* Borda Interna (Vermelho Escuro) */
+    border: 5px solid var(--secondary-red); 
+    
+    /* Borda Externa (Azul Claro) */
+    box-shadow: 0 0 0 5px var(--primary-color); 
+    
+    transition: all 0.3s ease;
+}
+
+.profile-name { font-size: 2rem; margin: 0; color: var(--primary-color); }
+.profile-username { font-size: 1.1rem; color: #aaa; margin-bottom: 10px; }
+
+.btn-edit-profile {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+    background: #3a4a6b; color: #fff; padding: 8px 15px; border-radius: 6px;
+    font-size: 0.9rem; transition: background 0.3s;
+}
+.btn-edit-profile:hover { background: #4a5c7f; }
+
+/* --- SEÇÕES DE CONTEÚDO --- */
+.section-title {
+    font-size: 1.4rem; color: var(--primary-color); margin-bottom: 15px;
+    display: flex; align-items: center; gap: 10px;
+}
+.profile-description { line-height: 1.6; color: #e0e0e0; margin-bottom: 20px; padding: 10px 0; }
+.divider { border: 0; height: 1px; margin: 30px 0; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+
+/* --- TEMA CLARO: ADAPTAÇÕES --- */
+body.theme-light { background: var(--bg-light); color: var(--text-light); }
+.theme-light .navbar { background: rgba(255, 255, 255, 0.8); border-bottom: 1px solid var(--border-color-light); }
+.theme-light .profile-container { background: var(--card-bg-light); border: 1px solid var(--border-color-light); }
+.theme-light .logo, .theme-light .profile-name, .theme-light .section-title, .theme-light .nav-links li a { color: var(--text-light); }
+.theme-light .profile-avatar-img { border: 5px solid var(--secondary-red); box-shadow: 0 0 0 5px var(--text-light); }
+.theme-light .profile-header { border-bottom: 1px solid var(--border-color-light); }
+.theme-light .divider { border-top: 1px solid var(--border-color-light); }
+.theme-light .profile-description { color: var(--text-light); }
+.theme-light .profile-username { color: #666; }
+.theme-light footer { background: #e0e0e0; color: #555; border-top: 1px solid #ccc; }
+
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+    .profile-header { flex-direction: column; text-align: center; }
+    .profile-info { text-align: center; }
+    .navbar { flex-direction: column; align-items: flex-start; padding: 10px 20px; }
+    .nav-links { display: none; }
+    .search-box { margin-top: 10px; width: 100%; justify-content: space-between; }
+}

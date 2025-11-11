@@ -1,0 +1,206 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Literary | Editar Obra</title>
+        <link rel="stylesheet" href="/escrever/escrever.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="/detalhesobras/detalhes.css"> 
+    </head>
+    <body>
+
+        <script>
+    window.onload = function() {
+        // Este deve ser o primeiro código a ser executado
+        checkAuth(); 
+        // O resto da inicialização da página pode vir aqui ou no arquivo JS principal
+        loadPreferences(); 
+        // REMOVA: loadBookContent(); 
+        
+        // ADICIONE A INICIALIZAÇÃO DA PÁGINA DE DETALHES
+        initDetailsPage();
+    };
+</script>
+
+        <script src="leitura.js"></script>
+
+        <nav class="navbar">
+            <div class="logo">Literary</div>
+            <ul class="nav-links">
+                <li><a href="/home/home.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/perfil/perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
+                <li><a href="/chat/chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+                <!-- <li><a href="/escrever/escrever.html"><i class="fas fa-pen"></i> Escrever</a></li>-->
+                <li class="active"><a href="/obras/obras.html"><i class="fas fa-book"></i> Minhas Obras</a></li>
+                <!-- <li><a href="/Rascunhos/rascunhos.html"><i class="fas fa-file-alt"></i> Rascunhos</a></li>-->
+                <li><a href="/biblioteca/Biblioteca.html"><i class="fas fa-book-open"></i> Biblioteca</a></li>
+                <li><a href="/notificacoes/notificacoes.html"><i class="fas fa-bell"></i> Notificações</a></li>
+                <li><a href="/contato/contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li><a href="/politica/politica.html"><i class="fas fa-info-circle"></i> Política</a></li>
+            <li><a href="/configuracoes/configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+            </ul>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Pesquisar livros, autores..." />
+                <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+        
+        <main class="detalhes-container">
+            <header class="detalhes-header">
+                <a href="/obras/obras.html" class="voltar"><i class="fas fa-arrow-left"></i> Editar detalhes da História</a>
+                <div class="header-buttons">
+                    <button class="btn cancelar" onclick="window.location.href='/obras/obras.html'">Cancelar</button>
+                    <button class="btn gravar" onclick="salvarDetalhes()">Gravar</button>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                
+                <div class="cover-panel">
+                    <div class="cover-display">
+                        <img id="capaObraEdit" src="/site/IMG/capa_rpg_mockup.png" alt="Capa da Obra" />
+                        
+                        <input type="file" id="coverImageInput" accept="image/*" style="display: none;" onchange="handleCoverImageChange(event)">
+                        
+                        <button class="btn-edit-cover" title="Trocar Capa" onclick="document.getElementById('coverImageInput').click()">
+                            <i class="fas fa-pen-fancy"></i> 
+                        </button>
+                    </div>
+                    <h1 id="tituloObraEdit"></h1> 
+                    <button class="btn preview-btn">Pré-visualização</button>
+                </div>
+
+                <div class="tabs-panel">
+                    <div class="tabs-nav">
+                        <button class="tab-button" data-tab="detalhes">Detalhes da História</button>
+                        <button class="tab-button active" data-tab="indice">Índice</button>
+                        <button class="tab-button new" data-tab="notas">Notas da História <span>Novo</span></button>
+                    </div>
+
+                    <div id="indice" class="tab-content active">
+                        <button class="btn novo-capitulo" onclick="abrirNovoCapitulo()">
+                            <i class="fas fa-plus"></i> Novo capítulo
+                        </button>
+
+                        <div class="capitulo-lista">
+                        </div>
+                    </div>
+
+                    <div id="detalhes" class="tab-content hidden">
+                        <form id="detalhesForm">
+                            <div class="input-group">
+                                <label for="tituloObraInput">Título da Obra</label>
+                                <input type="text" id="tituloObraInput" name="tituloObra" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="sinopseObraInput">Sinopse (Resumo da história)</label>
+                                <textarea id="sinopseObraInput" name="sinopseObra" rows="4" required></textarea>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="tagsObraInput">Tags (Separe por vírgula)</label>
+                                <input type="text" id="tagsObraInput" name="tagsObra">
+                            </div>
+                            
+                            <div class="meta-row">
+                                <div class="input-group half">
+                                    <label for="generoObraInput">Gênero Principal</label>
+                                    <select id="generoObraInput" name="generoObra">
+                                        <option value="">Selecione...</option>
+                                        <option value="Fantasia">Fantasia</option>
+                                        <option value="Sci-Fi">Ficção Científica</option>
+                                        <option value="Romance">Romance</option>
+                                        <option value="Suspense">Suspense</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-group half">
+                                    <label for="classificacaoObraInput">Classificação</label>
+                                    <select id="classificacaoObraInput" name="classificacaoObra">
+                                        <option value="Livre">Livre</option>
+                                        <option value="+18">+18 (Conteúdo adulto)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="notas" class="tab-content hidden">
+                        <p>Conteúdo para Notas Privadas da História (Somente visível para o autor).</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+
+        <div id="chapterModal" class="chapter-modal-overlay">
+            <div class="chapter-modal-content">
+                
+                <div class="modal-header-top">
+                    <div class="logo">Literary</div>
+                    <div class="modal-tabs-nav">
+                        <button class="modal-tab-button">Home</button>
+                        <button class="modal-tab-button">Perfil</button>
+                        <button class="modal-tab-button">Chat</button>
+                        <!-- <button class="modal-tab-button active-nav-modal">Escrever</button>-->
+                        <button class="modal-tab-button">Minhas Obras</button>
+                        <!-- <button class="modal-tab-button">Rascunhos</button>-->
+                        <button class="modal-tab-button">Biblioteca</button>
+                        <button class="modal-tab-button">Notificações</button>
+                        <button class="modal-tab-button">Contato</button>
+                        <button class="modal-tab-button">Política</button>
+                        <button class="modal-tab-button">Configurações</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="Pesquisar livros, autores..." />
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="modal-header-secondary">
+                    <div class="modal-tabs">
+                        <p class="modal-title-path">Nova Obra</p>
+                        <button class="modal-tab-button active">Inserir Capítulo</button>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="modal-content-area">
+                        <h2 style="color: #fff; margin-bottom: 25px;">Conteúdo do Capítulo</h2>
+
+                        <input 
+                            type="text" 
+                            class="input-title" 
+                            id="chapterTitleInput"
+                            placeholder="Título do Capítulo (Ex: Capítulo I: O Início da Jornada)..."
+                        />
+
+                        <textarea 
+                            class="input-content" 
+                            id="chapterContentTextarea"
+                            placeholder="Comece a escrever o conteúdo do seu capítulo aqui..."
+                            oninput="updateWordCount()"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <p class="word-count" id="wordCountDisplay">0 palavras</p>
+                    <div class="footer-buttons">
+                        <button class="btn voltar" onclick="fecharNovoCapitulo()"><i class="fas fa-arrow-left"></i> Voltar</button>
+                        <button class="btn salvar-rascunho" onclick="salvarCapitulo('Rascunho')"><i class="fas fa-save"></i> Salvar Rascunho</button>
+                        <button class="btn publicar-capitulo" onclick="salvarCapitulo('Publicado')"><i class="fas fa-upload"></i> Publicar Capítulo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+        </footer>
+
+        <script src="/detalhesobras/detalhes.js"></script>
+    </body>
+    </html>

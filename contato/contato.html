@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato e Suporte | Literary</title>
+    <link rel="stylesheet" href="/contato/contato.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="theme-dark"> 
+    
+    <nav class="navbar">
+        <div class="logo">Literary</div>
+        <ul class="nav-links">
+            <li><a href="/home/home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/perfil/perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
+            <li><a href="/chat/chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+            <li><a href="/obras/obras.html"><i class="fas fa-book"></i> Minhas Obras</a></li>
+            <li><a href="/biblioteca/Biblioteca.html"><i class="fas fa-book-open"></i> Biblioteca</a></li>
+            <li><a href="/notificacacoes/notificacoes.html"><i class="fas fa-bell"></i> Notificações</a></li>
+            <li class="active"><a href="/contato/contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li><a href="/politica/politica.html"><i class="fas fa-info-circle"></i> Política</a></li>
+            <li><a href="/configuracoes/configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Pesquisar..." />
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+    
+    <main class="wrapper">
+        <div class="contact-container">
+            
+            <h1 class="page-title"><i class="fas fa-headset"></i> Fale Conosco</h1>
+            <p class="subtitle">Utilize o formulário abaixo ou consulte a seção de ajuda.</p>
+
+            <section class="contact-form-section">
+                <form id="contact-form">
+                    
+                    <div class="form-group">
+                        <label for="name"><i class="fas fa-user"></i> Seu Nome (Opcional)</label>
+                        <input type="text" id="name" placeholder="Seu nome ou nome de usuário">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Seu E-mail</label>
+                        <input type="email" id="email" placeholder="email@exemplo.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject"><i class="fas fa-tag"></i> Assunto</label>
+                        <input type="text" id="subject" placeholder="Ex: Problema de login, Sugestão de recurso" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message"><i class="fas fa-comment-alt"></i> Mensagem</label>
+                        <textarea id="message" rows="5" placeholder="Descreva sua questão ou feedback detalhadamente..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Enviar Mensagem</button>
+                </form>
+            </section>
+            
+            <hr class="divider">
+
+            <section class="help-section">
+                <h2 class="section-title"><i class="fas fa-question-circle"></i> Ajuda Rápida</h2>
+                <div class="help-links">
+                    <a href="/faq/faq.html" class="help-link"><i class="fas fa-info-circle"></i> Perguntas Frequentes (FAQ)</a>
+                    <a href="/status/status.html" class="help-link"><i class="fas fa-globe"></i> Status do Serviço</a>
+                    <a href="mailto:suporte@literary.com" class="help-link"><i class="fas fa-inbox"></i> E-mail Direto: suporte@literary.com</a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/contato/contato.js"></script> 
+</body>
+</html>

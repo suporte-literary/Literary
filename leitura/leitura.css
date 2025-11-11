@@ -1,0 +1,591 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Lora:wght@400;700&display=swap');
+
+/* --- VARIÁVEIS DE TEMA --- */
+:root {
+    --bg-light: #f0f0f5;
+    --text-dark: #fff; /* Usado no Dark Mode */
+    --text-light: #141e30;
+    --primary-color: #64b2f1;
+    --card-bg-light: #ffffff;
+    --border-color-light: #ccc;
+}
+
+/* --- TEMA CLARO (APLICAÇÃO) --- */
+body.theme-light {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+/* Adaptações do tema claro para elementos comuns: */
+.theme-light .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.theme-light .settings-container, 
+.theme-light .notification-list, /* Para notificacoes.css */
+.theme-light .politica-container, /* Para politica_privacidade.css */
+.theme-light footer {
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-light);
+}
+
+/* Garante que o texto de títulos e links não desapareça no fundo claro */
+.theme-light .logo, 
+.theme-light .page-title, 
+.theme-light .block-title,
+.theme-light .nav-links li a {
+    color: var(--text-light);
+}
+.theme-light .nav-links li.active a {
+    color: var(--text-dark); /* Texto branco no link ativo azul */
+}
+/* ... Adapte outras classes específicas de card/fundo conforme necessário para cada tela. */* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* Fonte Padrão para Controles */
+    font-family: "Poppins", sans-serif;
+}
+
+/* === TEMAS DE LEITURA (Aplicados ao <body>) === */
+
+/* Tema Padrão (Escuro) */
+.theme-dark {
+    --bg-color: #1c2838; /* Azul Escuro Suave */
+    --text-color: #e0e0e0;
+    --header-bg: rgba(28, 40, 56, 0.95);
+    --control-bg: #2c3e50;
+    --control-color: #64b2f1;
+}
+
+/* Tema Sépia */
+.theme-sepia {
+    --bg-color: #f7e7c9;
+    --text-color: #5a4b3f;
+    --header-bg: rgba(247, 231, 201, 0.95);
+    --control-bg: #e5d7ba;
+    --control-color: #8c7851;
+}
+
+/* Tema Claro */
+.theme-light {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --control-bg: #f0f0f0;
+    --control-color: #64b2f1;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+/* === Cabeçalho de Leitura (Topo Fixo) === */
+.leitura-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: var(--header-bg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.leitura-header .left-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#bookTitleHeader {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60vw;
+}
+
+.back-btn {
+    color: var(--control-color);
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.back-btn:hover {
+    color: #64b2f1;
+}
+
+#toggleSettingsBtn {
+    background: none;
+    border: none;
+    color: var(--control-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+#toggleSettingsBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* NOVO: Estilo do Botão do Índice no Cabeçalho */
+#indexBtn {
+    background: none;
+    border: none;
+    color: var(--control-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+}
+#indexBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* === Modal de Configurações === */
+.settings-modal {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    top: 60px; /* Abaixo do header */
+    right: 20px;
+    z-index: 1000;
+    background: var(--control-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 250px;
+}
+
+.settings-modal h3 {
+    color: var(--control-color);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+}
+
+.setting-group {
+    margin-bottom: 15px;
+}
+
+.setting-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+/* Controles de Fonte */
+.font-size-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.font-size-controls button {
+    background: var(--control-color);
+    color: var(--control-bg);
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: opacity 0.3s;
+}
+
+.font-size-controls button:hover {
+    opacity: 0.8;
+}
+
+#currentFontSize {
+    font-size: 0.9rem;
+}
+
+/* Controles de Tema */
+.theme-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.theme-btn {
+    width: 30px;
+    height: 30px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.theme-btn.active {
+    border-color: #64b2f1;
+    box-shadow: 0 0 0 2px var(--control-bg); /* Contraste ao redor do anel */
+}
+
+.theme-btn.dark { background-color: #1c2838; }
+.theme-btn.sepia { background-color: #f7e7c9; }
+.theme-btn.light { background-color: #ffffff; border-color: #ccc; }
+
+
+/* === NOVO: Modal do Índice de Capítulos (Lateral Esquerda) === */
+.index-modal {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px; /* Largura do painel */
+    z-index: 1500; 
+    background: var(--control-bg);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    transform: translateX(-100%); /* Escondido fora da tela */
+    transition: transform 0.3s ease-out;
+    padding-top: 70px; /* Espaço para o header */
+}
+
+.index-modal.show {
+    transform: translateX(0); /* Mostra na tela */
+}
+
+.index-content {
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto; /* Rolagem para a lista de capítulos */
+}
+
+.index-content h3 {
+    color: var(--control-color);
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+#chapterList {
+    list-style: none;
+    padding: 0;
+}
+
+#chapterList li {
+    padding: 10px 0;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+}
+
+#chapterList li:last-child {
+    border-bottom: none;
+}
+
+#chapterList li a {
+    color: var(--text-color);
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    transition: color 0.2s, font-weight 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#chapterList li a:hover {
+    color: #64b2f1;
+    font-weight: 600;
+}
+
+/* Marca o capítulo atual */
+#chapterList li a.current-chapter {
+    color: #55efc4; /* Cor de destaque para o atual */
+    font-weight: 700;
+}
+
+/* === Área de Leitura (Conteúdo Principal) === */
+.reading-area {
+    padding: 80px 50px 100px; /* Ajustado padding-bottom para a altura da nav-bar */
+    max-width: 800px; 
+    margin: 0 auto;
+}
+
+#bookContent {
+    line-height: 1.7;
+    text-align: justify;
+    /* Define a fonte Padrão como Arial */
+    font-family: Arial, sans-serif; 
+}
+
+/* Tamanho Padrão da Fonte (Default: 14px) */
+#bookContent p {
+    /* 0.875rem é equivalente a 14px (considerando body default 16px) */
+    font-size: 0.875rem; 
+    margin-bottom: 1.5em; /* Espaçamento entre parágrafos */
+}
+
+/* --- Classes de Tamanho de Fonte (Usadas pelo JS) --- */
+
+/* Pequena (Ex: 12px) */
+#bookContent.small-font p {
+    font-size: 0.75rem; 
+}
+/* Padrão (14px) */
+#bookContent.default-font p {
+    font-size: 0.875rem; 
+}
+/* Grande (Ex: 16px) */
+#bookContent.large-font p {
+    font-size: 1rem;
+}
+/* Extra Grande (Ex: 18px) */
+#bookContent.x-large-font p {
+    font-size: 1.125rem; 
+}
+
+/* --- Estilos para o Conteúdo Lógico do Livro --- */
+
+/* Título da Obra (Injetado) */
+#bookContent h2.obra-title {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+/* Título do Capítulo (Injetado) */
+#bookContent h3.chapter-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+/* Linha Divisória (Injetada) */
+#bookContent hr.chapter-divider {
+    border: none;
+    border-top: 1px dashed rgba(255, 255, 255, 0.3);
+    margin: 50px auto;
+    width: 50%;
+}
+
+/* --- Interações e Estatísticas do Capítulo --- */
+
+.chapter-interactions {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.interaction-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.interaction-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--control-color);
+    transition: color 0.2s, transform 0.1s;
+}
+
+.interaction-btn:hover {
+    color: #64b2f1;
+}
+
+/* Estilo para o botão Curtir (Coração) */
+.like-btn.liked {
+    color: #d32f2f; /* Vermelho */
+    transform: scale(1.1);
+}
+
+/* Estilo para as Visualizações */
+.interaction-item .fa-eye {
+    color: var(--control-color);
+}
+
+
+/* === Barra de Navegação de Capítulos (Rodapé Fixo) === */
+.chapter-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 30px;
+    background: var(--header-bg);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 90; 
+}
+
+.nav-btn {
+    background: var(--control-bg);
+    color: var(--control-color);
+    border: 1px solid var(--control-color);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s, opacity 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: rgba(100, 178, 241, 0.1);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nav-btn.index-toggle {
+    background: #64b2f1;
+    color: var(--control-bg);
+    font-weight: 600;
+}
+
+/* --- Seção de Comentários (NOVO) --- */
+
+.full-comments-container {
+    margin-top: 50px;
+    padding: 20px;
+    background: var(--control-bg); /* Fundo sutil */
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comments-main-title {
+    font-size: 1.5rem;
+    color: var(--control-color);
+    margin-bottom: 20px;
+}
+
+.chapter-comments-section {
+    padding: 15px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.chapter-comments-section h4 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    padding-bottom: 5px;
+}
+
+/* Formulário de Comentários */
+.comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--control-color);
+    border-radius: 4px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    resize: vertical;
+}
+
+.comment-form button {
+    background: #64b2f1;
+    color: var(--control-bg);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Lista de Comentários */
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.comment-item {
+    padding: 10px 0;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: 700;
+    color: var(--control-color);
+    font-size: 0.9rem;
+}
+
+.comment-text {
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+
+/* === Responsividade === */
+@media (max-width: 768px) {
+    .leitura-header {
+        padding: 10px 15px;
+    }
+    
+    #bookTitleHeader {
+        font-size: 1rem;
+        max-width: 50vw;
+    }
+
+    /* Ajuste de padding em telas menores */
+    .reading-area {
+        padding: 70px 20px 90px; /* Reduz a margem lateral e o padding inferior */
+    }
+    
+    /* Move o modal para o centro superior em telas pequenas */
+    .settings-modal {
+        top: 60px; 
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .chapter-navigation {
+        /* Garante que os botões não quebrem a linha */
+        gap: 10px;
+        padding: 10px 10px;
+    }
+
+    .nav-btn {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+}

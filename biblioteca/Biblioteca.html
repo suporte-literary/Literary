@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literary | Biblioteca</title>
+    <link rel="stylesheet" href="/biblioteca/Biblioteca.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <script>
+        window.onload = function() {
+            // Este deve ser o primeiro código a ser executado
+            checkAuth(); 
+            // O resto da inicialização da página
+            loadPreferences(); 
+            // Renomeado para carregar o conteúdo da Biblioteca
+            loadLibraryContent(); 
+        };
+    </script>
+
+    <nav class="navbar">
+        <div class="logo">Literary</div>
+        <ul class="nav-links">
+            <li><a href="/home/home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/perfil/Perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
+            <li><a href="/chat/chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+            <li><a href="/obras/obras.html"><i class="fas fa-book"></i> Minhas Obras</a></li>
+            <li class="active"><a href="/biblioteca/Biblioteca.html"><i class="fas fa-book-open"></i> Biblioteca</a></li>
+            <li><a href="/notificacoes/notificacoes.html"><i class="fas fa-bell"></i> Notificações</a></li>
+            <li><a href="/contato/contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li><a href="/politica/politica.html"><i class="fas fa-info-circle"></i> Política</a></li>
+            <li><a href="/configuracoes/configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Pesquisar na Biblioteca..." />
+            <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <section class="home-content">
+        <div class="welcome-box">
+            <h1><i class="fas fa-book-open"></i> Minha Biblioteca</h1>
+            <p id="library-status">Aqui estão todas as obras que você adicionou. Continue de onde parou!</p>
+        </div>
+
+        <div class="category-list-container" id="categoryListContainer">
+             </div>
+
+    </section>
+
+    <div class="modal" id="bookModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div class="pre-leitura-info">
+                <img id="modalCover" alt="Capa do livro">
+                <div class="info-text">
+                    <h2 id="modalTitle"></h2>
+                    <p class="author-name">Por: <span id="modalAuthor">Autor Desconhecido</span></p>
+                    <div class="metadata">
+                        <span><i class="fas fa-list-alt"></i> Gênero: <span id="modalGenre">N/A</span></span>
+                        <span><i class="fas fa-star"></i> Avaliação: 4.5/5</span>
+                    </div>
+                    <div class="buttons">
+                        <button class="read" id="btnLerObra"><i class="fas fa-book-open"></i> Ler</button>
+                        <button class="add-to-library" id="btnAddToLibrary"><i class="fas fa-times"></i> Remover da Biblioteca</button>
+                    </div>
+                </div>
+            </div>
+            <div class="synopsis-area">
+                <h3>Sinopse:</h3>
+                <p id="modalSynopsis"></p>
+                <div id="modalTags" class="tags"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/biblioteca/Biblioteca.js"></script>
+</body>
+</html>

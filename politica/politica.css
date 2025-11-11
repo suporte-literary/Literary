@@ -1,0 +1,243 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* --- VARIÁVEIS DE TEMA --- */
+:root {
+    --bg-light: #f0f0f5;
+    --text-dark: #fff; /* Usado no Dark Mode */
+    --text-light: #141e30;
+    --primary-color: #64b2f1;
+    --card-bg-light: #ffffff;
+    --border-color-light: #ccc;
+}
+
+/* --- TEMA CLARO (APLICAÇÃO) --- */
+body.theme-light {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+/* Adaptações do tema claro para elementos comuns: */
+.theme-light .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.theme-light .settings-container, 
+.theme-light .notification-list, /* Para notificacoes.css */
+.theme-light .politica-container, /* Para politica_privacidade.css */
+.theme-light footer {
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-light);
+}
+
+/* Garante que o texto de títulos e links não desapareça no fundo claro */
+.theme-light .logo, 
+.theme-light .page-title, 
+.theme-light .block-title,
+.theme-light .nav-links li a {
+    color: var(--text-light);
+}
+.theme-light .nav-links li.active a {
+    color: var(--text-dark); /* Texto branco no link ativo azul */
+}
+/* ... Adapte outras classes específicas de card/fundo conforme necessário para cada tela. *//* --- ESTILOS GLOBAIS (Padrão da Home) --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR (Padrão Home) */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+.logo { font-weight: 700; font-size: 1.3rem; color: #64b2f1; }
+.nav-links { list-style: none; display: flex; gap: 15px; }
+.nav-links li a { color: #fff; text-decoration: none; font-size: 0.95rem; padding: 8px 12px; border-radius: 6px; transition: 0.3s; }
+.search-box { display: flex; align-items: center; background: rgba(255,255,255,0.1); border-radius: 20px; padding: 5px 10px; }
+.search-box input { border: none; background: transparent; color: #fff; padding: 5px; width: 160px; outline: none; }
+.search-box button { border: none; background: none; color: #64b2f1; cursor: pointer; font-size: 1rem; }
+
+/* WRAPPER E TÍTULO */
+.wrapper {
+    flex: 1;
+    padding: 100px 5% 60px; 
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+.politica-container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(100, 178, 241, 0.2);
+}
+.page-title {
+    font-size: 2.5rem;
+    color: #64b2f1;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* --- ESTILOS ESPECÍFICOS: CONTEÚDO E ADMIN --- */
+
+/* Seção Admin (Botão de acesso) */
+.admin-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.admin-section p {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Formulário de Login */
+.admin-login-box {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+}
+.admin-login-box h3 {
+    color: #55efc4;
+    margin-bottom: 5px;
+}
+.admin-login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #3a4a6b;
+    background: #1f2a44;
+    color: #fff;
+    border-radius: 6px;
+    outline: none;
+}
+.error-message {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+}
+
+/* BOTÕES GERAIS */
+.btn-primary, .btn-success, .btn-secondary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-primary { 
+    background: #64b2f1; 
+    color: #141e30; 
+}
+.btn-success { 
+    background: #55efc4; 
+    color: #141e30; 
+}
+.btn-secondary {
+    background: #3a4a6b; 
+    color: #fff;
+}
+.btn-primary:hover { background: #55a0e0; }
+.btn-success:hover { background: #45d4b3; }
+.btn-secondary:hover { background: #4a5c7f; }
+
+/* CONTEÚDO DA POLÍTICA (Visualização e Edição) */
+.policy-content {
+    /* Permitir rolagem vertical para leitura da política */
+    max-height: 60vh; 
+    overflow-y: auto;
+    padding-right: 10px;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+.policy-content h2 {
+    color: #64b2f1;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed #3a4a6b;
+    padding-bottom: 5px;
+}
+.policy-content p {
+    margin-bottom: 15px;
+}
+
+/* ÁREA DE EDIÇÃO (Editor) */
+.editor-area h2 {
+    color: #55efc4;
+    margin-bottom: 15px;
+}
+#policy-textarea {
+    width: 100%;
+    min-height: 400px;
+    padding: 20px;
+    border: 1px solid #64b2f1;
+    background: #1f2a44;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+/* Classe de ocultação */
+.hidden {
+    display: none !important;
+}
+
+/* RODAPÉ */
+footer {
+    background: rgba(255, 255, 255, 0.05);
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+    color: #aaa;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+    .navbar { flex-direction: column; align-items: flex-start; padding: 10px 20px; }
+    .nav-links { display: none; }
+    .search-box { margin-top: 10px; width: 100%; justify-content: space-between; }
+    .wrapper { padding: 100px 20px 40px; }
+    .page-title { font-size: 2rem; }
+    .admin-section { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .btn-primary { width: 100%; justify-content: center; }
+}

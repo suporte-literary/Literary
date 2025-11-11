@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidade | Literary</title>
+    <link rel="stylesheet" href="/politica/politica.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="logo">Literary</div>
+        <ul class="nav-links">
+            <li><a href="/home/home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/perfil/Perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
+            </ul>
+        <div class="search-box">
+            <input type="text" placeholder="Pesquisar..." />
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+    
+    <main class="wrapper">
+        <div class="politica-container">
+            
+            <h1 class="page-title"><i class="fas fa-shield-alt"></i> Política de Privacidade</h1>
+
+            <section id="admin-access-section" class="admin-section">
+                <p>Para visualizar a política, utilize o scroll. Para alterar o conteúdo, acesse como administrador.</p>
+                <button id="show-admin-form-btn" class="btn-primary"><i class="fas fa-lock"></i> Acesso Admin</button>
+            </section>
+
+            <form id="admin-login-form" class="admin-login-box hidden">
+                <h3>Acesso Restrito</h3>
+                <input type="password" id="admin-password" placeholder="Senha do Administrador" required>
+                <button type="submit" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+                <p id="login-message" class="error-message"></p>
+            </form>
+
+            <section class="content-section">
+                
+                <div id="policy-display" class="policy-content">
+                    </div>
+                
+                <div id="policy-editor" class="editor-area hidden">
+                    <h2>Editor de Política</h2>
+                    <textarea id="policy-textarea" rows="20"></textarea>
+                    <button id="save-policy-btn" class="btn-success"><i class="fas fa-save"></i> Salvar Alterações</button>
+                    <button id="logout-btn" class="btn-secondary"><i class="fas fa-unlock"></i> Sair do Modo Admin</button>
+                </div>
+
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script src="/politica/politica.js"></script> 
+</body>
+</html>

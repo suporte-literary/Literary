@@ -1,0 +1,646 @@
+/* --- VARIÁVEIS DE TEMA --- */
+:root {
+    --bg-light: #f0f0f5;
+    --text-dark: #fff; /* Usado no Dark Mode */
+    --text-light: #141e30;
+    --primary-color: #64b2f1;
+    --card-bg-light: #ffffff;
+    --border-color-light: #ccc;
+}
+
+/* --- TEMA CLARO (APLICAÇÃO) --- */
+body.theme-light {
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+/* Adaptações do tema claro para elementos comuns: */
+.theme-light .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.theme-light .settings-container, 
+.theme-light .notification-list, /* Para notificacoes.css */
+.theme-light .politica-container, /* Para politica_privacidade.css */
+.theme-light footer {
+    background: var(--card-bg-light);
+    border: 1px solid var(--border-color-light);
+    color: var(--text-light);
+}
+
+/* Garante que o texto de títulos e links não desapareça no fundo claro */
+.theme-light .logo, 
+.theme-light .page-title, 
+.theme-light .block-title,
+.theme-light .nav-links li a {
+    color: var(--text-light);
+}
+.theme-light .nav-links li.active a {
+    color: var(--text-dark); /* Texto branco no link ativo azul */
+}
+/* ... Adapte outras classes específicas de card/fundo conforme necessário para cada tela. *//* Reutilizando as fontes e cores base do escrever.css */
+body {
+    background-color: #1a232f; /* Fundo escuro */
+    color: #fff;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    /* Estilos da navbar base do seu projeto */
+    background: #1c2838;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+}
+
+.logo {
+    color: #64b2f1;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-links a:hover, .nav-links .active a {
+    color: #64b2f1;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-box input {
+    padding: 8px 15px;
+    border-radius: 20px 0 0 20px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.search-box button {
+    padding: 8px 15px;
+    border-radius: 0 20px 20px 0;
+    border: none;
+    background: #64b2f1;
+    color: #1c2838;
+    cursor: pointer;
+}
+
+/* Estilo do Rodapé */
+footer {
+    padding: 15px;
+    text-align: center;
+    background: #1c2838;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    margin-top: auto; /* Garante que fique no final */
+}
+
+/* Estilo para botões genéricos */
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* --- Detalhes da Obra (Conteúdo Principal) --- */
+
+.detalhes-container {
+    flex: 1;
+    padding: 120px 30px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 1. Estilo do Header (Título e Botões de Ação) */
+.detalhes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+}
+
+.voltar {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+}
+
+.voltar:hover {
+    color: #64b2f1;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Botões Gravar/Cancelar */
+.btn.cancelar {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 8px 15px;
+}
+
+.btn.gravar {
+    background: #64b2f1; /* Laranja do botão Gravar do print */
+    color: #fff;
+    padding: 8px 15px;
+    font-weight: 700;
+}
+
+/* 2. Layout do Conteúdo Principal */
+.content-wrapper {
+    display: flex;
+    gap: 30px;
+    width: 90%;
+    max-width: 1200px;
+    align-items: flex-start;
+}
+
+/* 2.1 Coluna da Capa */
+.cover-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px; 
+    /* Altura mínima rígida para evitar empurrão */
+    min-height: 440px; 
+}
+
+/* Título da Obra sob a capa */
+.cover-panel #tituloObraEdit { 
+    font-size: 1.5rem;
+    color: #64b2f1;
+    text-align: center;
+    
+    /* DEFINIÇÃO RÍGIDA DE ALTURA E LINHA: */
+    height: 75px; 
+    line-height: 1.25; 
+
+    /* Margem rígida: 15px em cima, 0 embaixo */
+    margin: 15px 0 0 0; 
+    padding: 0 5px; 
+    
+    /* Propriedades para truncagem de texto (corte com ...) */
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+}
+
+.cover-display {
+    position: relative;
+    width: 200px; 
+    height: 300px; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    margin-bottom: 0; 
+}
+
+.cover-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-edit-cover {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: #64b2f1;
+    color: #1c2838;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background 0.2s;
+}
+
+.btn-edit-cover:hover {
+    background: #55efc4;
+}
+
+.preview-btn {
+    background: transparent;
+    border: 1px solid #64b2f1;
+    color: #64b2f1;
+    padding: 10px 20px;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: 500;
+    /* Garante espaçamento fixo APÓS o bloco do título */
+    margin-top: 15px; 
+    margin-bottom: 0;
+}
+.preview-btn:hover {
+    background: #64b2f1;
+    color: #1c2838;
+}
+
+/* 2.2 Coluna de Abas (Tabs Panel) */
+.tabs-panel {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    min-height: 500px; 
+}
+
+.tabs-nav {
+    display: flex;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    color: #ccc;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-bottom-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-button:hover:not(.active) {
+    color: #fff;
+}
+
+.tab-button.active {
+    color: #64b2f1;
+    border-bottom-color: #64b2f1;
+    font-weight: 700;
+}
+
+.tab-button.new span {
+    background: #64b2f1;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.tab-content.hidden {
+    display: none;
+}
+
+/* Estilo do Botão Novo Capítulo */
+.btn.novo-capitulo {
+    background: #28a745; /* Verde para ação de adição */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+/* 3. Estilo da Lista de Capítulos (Índice) */
+.capitulo-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.capitulo-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    transition: background 0.2s;
+    cursor: pointer; 
+}
+
+.capitulo-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.capitulo-info {
+    flex-grow: 1;
+}
+
+.capitulo-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.capitulo-info .meta, .capitulo-stats .meta {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.capitulo-info .meta.publicado {
+    color: #55efc4; /* Verde suave para Publicado */
+    font-weight: 500;
+}
+
+/* Estilo para Rascunho */
+.capitulo-info .meta.rascunho {
+    color: #ffd700; /* Amarelo/Ouro para Rascunho */
+    font-weight: 500;
+}
+
+.capitulo-stats {
+    text-align: right;
+    min-width: 150px;
+}
+
+.btn-options {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* 4. Estilos do Formulário de Edição (ABA DETALHES) */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.input-group input, 
+.input-group textarea, 
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.input-group input:focus, 
+.input-group textarea:focus,
+.input-group select:focus {
+    border-color: #64b2f1;
+    outline: none;
+}
+
+.meta-row {
+    display: flex;
+    gap: 20px;
+}
+
+.meta-row .input-group.half {
+    flex: 1;
+}
+
+/* --- ESTILOS DO MODAL DE ESCRITA DE CAPÍTULO (NOVO E FOCADO) --- */
+
+.chapter-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a232f; 
+    display: none; 
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.chapter-modal-content {
+    background: #233140; 
+    width: 100%;
+    max-width: 100%;
+    height: 100vh; 
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0; 
+    overflow: hidden;
+}
+
+/* Estilo da Navbar no Topo do Modal (modal-header-top) */
+.modal-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #1c2838; /* Cor escura da navbar */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header-top .logo {
+    color: #64b2f1;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-header-top .search-box {
+    margin: 0;
+}
+
+.modal-header-top .modal-tabs-nav {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.modal-header-top .modal-tab-button {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal-header-top .modal-tab-button:hover,
+.modal-header-top .modal-tab-button.active-nav-modal {
+    color: #64b2f1;
+}
+
+
+/* Cabeçalho Secundário (1. Obra 2. Capítulo) */
+.modal-header-secondary {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 30px; 
+    background: #233140; /* Fundo do corpo do modal (mais claro) */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header-secondary .modal-tabs {
+    display: flex;
+    gap: 30px;
+}
+
+.modal-title-path {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.modal-header-secondary .modal-tab-button {
+    color: #64b2f1;
+    font-size: 1rem;
+    font-weight: 700;
+    border-bottom: 2px solid #64b2f1;
+    background: none;
+    padding: 0;
+    cursor: default;
+}
+
+
+/* Corpo do Modal (CORREÇÃO DE ALINHAMENTO) */
+.modal-body {
+    flex-grow: 1;
+    padding: 40px 30px; 
+    overflow-y: auto;
+    background: #233140; 
+    display: flex; 
+    justify-content: center; 
+}
+
+.modal-content-area {
+    width: 100%;
+    max-width: 800px; 
+    margin: 0; 
+    display: flex;
+    flex-direction: column;
+}
+
+.input-title {
+    width: 100%; 
+    background: rgba(0, 0, 0, 0.5); 
+    padding: 18px; 
+    font-size: 1.3rem; 
+    font-weight: 600;
+    margin-bottom: 25px; 
+    border-radius: 6px;
+    border: none; 
+    color: #fff;
+}
+
+.input-content {
+    width: 100%;
+    flex-grow: 1; 
+    background: rgba(0, 0, 0, 0.5); 
+    padding: 25px;
+    font-size: 1.1rem;
+    line-height: 1.8; 
+    min-height: 400px; 
+    border-radius: 6px;
+    border: none;
+    color: #fff;
+    resize: none;
+}
+
+/* Footer do Modal */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #1c2838; 
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.word-count {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* Ajuste dos Botões no Footer */
+.footer-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn.voltar {
+    background: transparent;
+    color: #fff; 
+    border: none;
+}
+
+.btn.salvar-rascunho {
+    background: #64b2f1;
+    color: #1c2838; 
+    margin-left: 0;
+    font-weight: 700;
+}
+
+.btn.publicar-capitulo {
+    background: #28a745; 
+    color: #fff;
+    margin-left: 10px;
+    font-weight: 700;
+}

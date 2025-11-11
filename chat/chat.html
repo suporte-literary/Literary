@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="/caminho/para/Auth.js"></script> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat | Literary</title>
+
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+<script>
+        window.onload = function() {
+            // Este deve ser o primeiro código a ser executado
+            checkAuth(); 
+            // O resto da inicialização da página pode vir aqui ou no arquivo JS principal
+            loadPreferences(); 
+            loadBookContent(); 
+        };
+    </script>
+
+    <script src="leitura.js"></script>
+    
+    <nav class="navbar">
+        <div class="logo">Literary</div>
+        <ul class="nav-links">
+            <li><a href="/home/home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/perfil/perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
+            <li class="active"><a href="/chat/chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+            <!--<li><a href="/escrever/escrever.html"><i class="fas fa-pen"></i> Escrever</a></li>-->
+            <li><a href="/obras/obras.html"><i class="fas fa-book"></i> Minhas Obras</a></li>
+            <!--<li class="active"><a href="/Rascunhos/rascunhos.html"><i class="fas fa-file-alt"></i> Rascunhos</a></li>-->
+            <li><a href="/biblioteca/Biblioteca.html"><i class="fas fa-book-open"></i> Biblioteca</a></li>
+            <li><a href="/notificacoes/notificacoes.html"><i class="fas fa-bell"></i> Notificações</a></li>
+            <li><a href="/contato/contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li><a href="/politica/politica.html"><i class="fas fa-info-circle"></i> Política</a></li>
+            <li><a href="/configuracoes/configuracoes.html"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Pesquisar livros, autores..." />
+            <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="chat-container">
+
+            <aside class="chat-sidebar" id="chat-sidebar">
+                <h2>Conversas</h2>
+                <ul id="chat-list">
+                    <li class="chat-item active" data-user="Agnês Vitória"><i class="fas fa-user-circle"></i> Agnês Vitória</li>
+                    <li class="chat-item" data-user="João Lucas"><i class="fas fa-user-circle"></i> João Lucas</li>
+                    <li class="chat-item" data-user="Helena Costa"><i class="fas fa-user-circle"></i> Helena Costa</li>
+                    <button id="closeSidebarBtn" style="display: none;"><i class="fas fa-times"></i> Fechar</button>
+                </ul>
+            </aside>
+
+            <section class="chat-window" id="chat-window">
+                <div class="chat-header">
+                    <button id="openSidebarBtn" class="toggle-sidebar-btn" style="display: none;">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="chat-user">
+                        <i class="fas fa-user-circle"></i>
+                        <h3 id="chat-with">Agnês Vitória</h3>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chat-messages">
+                    </div>
+
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Digite uma mensagem..." />
+                    <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/chat/chat.js"></script>
+</body>
+</html>

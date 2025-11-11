@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Literary</title>
+    <link rel="stylesheet" href="/login/login.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="theme-dark"> 
+    
+    <nav class="navbar">
+        <div class="logo">Literary</div>
+        <ul class="nav-links">
+            <li class="active"><a href="/login/login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li><a href="/formulario/formulario.html"><i class="fas fa-user-plus"></i> Registrar</a></li>
+        </ul>
+        </nav>
+    
+    <main class="wrapper">
+        <div class="login-card">
+            
+            <h2 class="welcome-text">Acesse sua conta Literary</h2>
+
+            <form id="login-form">
+                
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Nome de Usuário</label>
+                    <input type="text" id="username" placeholder="@usuario" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+            </form>
+
+            <div class="footer-links">
+                <a href="/recuperacao/recuperacao.html" class="link-secondary">Esqueceu a senha?</a>
+                <span>|</span>
+                <a href="/formulario/formulario.html" class="link-primary">Criar uma conta</a>
+            </div>
+            
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/login/login.js"></script> 
+</body>
+</html>
