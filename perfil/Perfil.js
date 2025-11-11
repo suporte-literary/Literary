@@ -1,53 +1,48 @@
-// --- LÓGICA UNIVERSAL DE TEMA (Deve ser mantida em todos os JS) ---
-(function() {
-    const THEME_KEY = 'literary_theme_preference';
-    const savedTheme = localStorage.getItem(THEME_KEY);
-    
-    if (savedTheme === 'light') {
-        document.body.classList.add('theme-light');
-        document.body.classList.remove('theme-dark');
-    }
-})();
-// --- FIM LÓGICA UNIVERSAL DE TEMA ---
-
+// perfil/perfil.js
+// Importa as ferramentas necessárias
+import { auth, db } from '../firebase-config.js'; 
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-    
-    const PROFILE_KEY = 'literary_user_profile';
-    const AVATAR_KEY = 'literary_user_avatar_url'; 
+    // Referências aos elementos HTML que serão preenchidos
+    const displayNameElement = document.getElementById('user-display-name');
+    const usernameElement = document.getElementById('user-username');
+    const bioElement = document.getElementById('user-bio');
+    // Adicione referências para o avatar se houver um elemento específico
 
-    // Elementos do DOM
-    const profileNameDisplay = document.getElementById('profile-name-display');
-    const usernameDisplay = document.getElementById('username-display');
-    const descriptionDisplay = document.getElementById('description-display');
-    const profileAvatarDisplay = document.getElementById('profile-avatar-display'); 
+    // 1. Monitorar o estado de autenticação para ter acesso ao usuário logado
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            // Usuário logado:
+            const userUID = user.uid;
+            
+            try {
+                // 2. Buscar o documento de perfil no Firestore (coleção 'users')
+                const docRef = doc(db, "users", userUID);
+                const docSnap = await getDoc(docRef);
 
-    // --- DADOS INICIAIS PADRÃO ---
-    const defaultProfile = {
-        name: 'Literary User',
-        username: 'usuario_literary',
-        description: 'Esta é a descrição padrão do seu perfil na Literary. Você pode alterá-la na tela de Configurações.'
-    };
-    // Placeholder com tamanho do avatar de perfil
-    const defaultAvatarUrl = 'https://via.placeholder.com/150/64b2f1/FFFFFF?text=L'; 
+                if (docSnap.exists()) {
+                    // 3. Documento encontrado: preencher o HTML
+                    const userData = docSnap.data();
+                    
+                    displayNameElement.textContent = userData.fullName || 'Nome Não Definido';
+                    usernameElement.textContent = `@${userData.username}` || '@usuario';
+                    bioElement.textContent = userData.bio || 'Biografia não preenchida.';
+                    
+                    console.log("Dados do perfil carregados:", userData);
 
-    /**
-     * Carrega e renderiza todos os dados do perfil (incluindo avatar).
-     */
-    function renderProfileData() {
-        const storedProfile = localStorage.getItem(PROFILE_KEY);
-        const currentProfile = storedProfile ? JSON.parse(storedProfile) : defaultProfile;
-        
-        // 1. Dados de texto
-        profileNameDisplay.textContent = currentProfile.name;
-        usernameDisplay.textContent = `@${currentProfile.username}`;
-        descriptionDisplay.textContent = currentProfile.description;
-        
-        // 2. Foto de Perfil (carrega do localStorage, se existir)
-        const savedAvatar = localStorage.getItem(AVATAR_KEY);
-        profileAvatarDisplay.src = savedAvatar || defaultAvatarUrl; 
-    }
-
-    // Inicializa a renderização dos dados
-    renderProfileData();
+                } else {
+                    // O documento de perfil não foi salvo corretamente no cadastro
+                    console.error("Erro: Não foi possível encontrar os dados do perfil no Firestore.");
+                    displayNameElement.textContent = user.email || 'Usuário Desconhecido';
+                    usernameElement.textContent = '@erro_perfil';
+                }
+            } catch (error) {
+                console.error("Erro ao carregar dados do Firestore:", error);
+                alert("Erro ao carregar o perfil. Tente novamente.");
+            }
+        } 
+        // Se o usuário não estiver logado, o 'auth-guard.js' já cuida do redirecionamento
+    });
 });
