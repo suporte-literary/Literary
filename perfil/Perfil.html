@@ -34,13 +34,16 @@
             
             <header class="profile-header">
                 <div class="avatar-box">
+                    <!-- ID para futuro carregamento de avatar -->
                     <img id="profile-avatar-display" src="/caminho/para/avatar_padrao.png" alt="Foto de Perfil do Usuário" class="profile-avatar-img">
                 </div>
 
                 <div class="profile-info">
-                    <h1 id="profile-name-display" class="profile-name">Nome do Usuário</h1>
+                    <!-- ID para carregar o nome completo (fullName) do Firestore -->
+                    <h1 id="user-display-name" class="profile-name">Nome do Usuário</h1>
                     
-                    <p id="username-display" class="profile-username">@usuario_literary</p>
+                    <!-- ID para carregar o nome de usuário (username) do Firestore -->
+                    <p id="user-username" class="profile-username">@usuario_literary</p>
 
                     <a href="/configuracoes/configuracoes.html" class="btn-edit-profile">
                         <i class="fas fa-cog"></i> Editar Perfil
@@ -50,7 +53,8 @@
 
             <section class="profile-bio-section">
                 <h2 class="section-title"><i class="fas fa-quote-left"></i> Biografia</h2>
-                <p id="description-display" class="profile-description">
+                <!-- ID para carregar a biografia (bio) do Firestore -->
+                <p id="user-bio" class="profile-description">
                     Esta é a descrição atual do seu perfil.
                 </p>
             </section>
@@ -69,8 +73,11 @@
 
     <footer>
         <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
-    </footer>   
+    </footer> 
     
-    <script src="/perfil/perfil.js"></script> 
+    <!-- 1. Proteção de Rotas (Importante: '..' para sair da pasta 'perfil/') -->
+    <script type="module" src="../auth-guard.js"></script>
+    <!-- 2. Lógica do Perfil (Importante: './' pois está na mesma pasta) -->
+    <script type="module" src="./perfil.js"></script> 
 </body>
 </html>
