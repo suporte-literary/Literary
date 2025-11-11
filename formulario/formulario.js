@@ -1,105 +1,71 @@
+// formulario/formulario.js
+// Importar as ferramentas necessárias
+// O '..' é porque o firebase-config.js está na raiz, e este arquivo está em 'formulario/'
+import { auth, db } from '../firebase-config.js'; 
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Certifique-se de que os IDs dos inputs correspondem aos IDs no seu formulario.html
     const registerForm = document.getElementById('register-form');
-    const fullNameInput = document.getElementById('full-name');
-    const usernameInput = document.getElementById('username');
+    
+    // Assumimos que o campo 'username' está sendo usado para o EMAIL, e 'full-name' para o nome de exibição.
+    const emailInput = document.getElementById('username'); 
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirm-password');
+    const fullNameInput = document.getElementById('full-name');
     
-    const usernameStatus = document.getElementById('username-status');
-    const passwordMatchStatus = document.getElementById('password-match-status');
-    
-    // --- SIMULAÇÃO DE NOMES DE USUÁRIO JÁ CADASTRADOS ---
-    const registeredUsernames = ['admin', 'test_user', 'literary_fan'];
-
-    // ==========================================================
-    // 1. VALIDAÇÃO DE NOME DE USUÁRIO (UNICIDADE)
-    // ==========================================================
-    usernameInput.addEventListener('input', () => {
-        const username = usernameInput.value.trim().toLowerCase();
-
-        // Limpa a mensagem se o campo estiver vazio
-        if (username.length === 0) {
-            usernameStatus.textContent = '';
-            usernameStatus.className = 'validation-message';
-            return;
-        }
-
-        // Simulação: Verifica se o nome de usuário já existe
-        if (registeredUsernames.includes(username)) {
-            usernameStatus.textContent = 'Este nome de usuário já está em uso.';
-            usernameStatus.className = 'validation-message error';
-        } else if (username.length < 4) {
-             usernameStatus.textContent = 'Nome de usuário deve ter pelo menos 4 caracteres.';
-            usernameStatus.className = 'validation-message error';
-        } 
-        else {
-            usernameStatus.textContent = 'Nome de usuário disponível!';
-            usernameStatus.className = 'validation-message success';
-        }
-    });
-
-
-    // ==========================================================
-    // 2. VALIDAÇÃO DE SENHAS CORRESPONDENTES
-    // ==========================================================
-    const checkPasswordMatch = () => {
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        if (confirmPassword.length === 0) {
-            passwordMatchStatus.textContent = '';
-            passwordMatchStatus.className = 'validation-message';
-        } else if (password === confirmPassword) {
-            passwordMatchStatus.textContent = 'As senhas coincidem.';
-            passwordMatchStatus.className = 'validation-message success';
-        } else {
-            passwordMatchStatus.textContent = 'As senhas não coincidem!';
-            passwordMatchStatus.className = 'validation-message error';
-        }
-    };
-
-    passwordInput.addEventListener('input', checkPasswordMatch);
-    confirmPasswordInput.addEventListener('input', checkPasswordMatch);
-
-
-    // ==========================================================
-    // 3. SUBMISSÃO DO FORMULÁRIO
-    // ==========================================================
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
         const fullName = fullNameInput.value.trim();
-        const username = usernameInput.value.trim().toLowerCase();
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        // Verifica as validações finais antes de prosseguir
-        const isUsernameValid = !registeredUsernames.includes(username) && username.length >= 4;
-        const isPasswordMatch = password === confirmPassword && password.length > 0;
-
-        if (fullName === '' || username === '' || password === '' || confirmPassword === '') {
-            alert('Por favor, preencha todos os campos.');
+        
+        if (!email || !password || !fullName) {
+            alert('❌ Por favor, preencha todos os campos obrigatórios.');
             return;
         }
 
-        if (!isUsernameValid) {
-            alert('Por favor, escolha um nome de usuário válido e exclusivo.');
+        if (password !== confirmPasswordInput.value.trim()) {
+            alert('❌ As senhas não coincidem!');
             return;
         }
 
-        if (!isPasswordMatch) {
-            alert('As senhas devem coincidir e não podem ser vazias.');
-            return;
-        }
+        try {
+            // 1. Criar o Usuário na Autenticação do Firebase (email e senha)
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-        // Se todas as validações passarem:
-        
-        // Simulação de registro bem-sucedido:
-        // Aqui você faria uma chamada API (fetch) para o backend para criar o usuário.
-        
-        alert(`Conta criada com sucesso para ${fullName}! Agora você pode fazer login.`);
-        
-        // Redireciona para a tela de login
-        window.location.href = '/login/login.html'; 
+            // 2. Salvar dados adicionais (Perfil) no Firestore usando o UID (ID Único) do Firebase
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                email: email,
+                fullName: fullName,
+                // Define um username inicial simples para exibição (ex: joao@literary.com -> joao)
+                username: email.split('@')[0], 
+                bio: 'Esta é a descrição padrão do seu perfil no Literary.',
+                createdAt: new Date()
+            });
+
+            alert('✅ Cadastro efetuado com sucesso! Redirecionando para o Login.');
+            // Redireciona para a tela de Login (presumivelmente na raiz, como index.html)
+            window.location.href = '../index.html'; 
+
+        } catch (error) {
+            console.error("Erro de Cadastro:", error.code, error.message);
+            let errorMessage = "Ocorreu um erro ao registrar. Tente novamente.";
+            
+            // Tratamento de erros de autenticação
+            if (error.code === 'auth/email-already-in-use') {
+                errorMessage = '📧 Este e-mail já está em uso.';
+            } else if (error.code === 'auth/invalid-email') {
+                errorMessage = 'O formato do e-mail é inválido.';
+            } else if (error.code === 'auth/weak-password') {
+                errorMessage = '🔒 A senha deve ter pelo menos 6 caracteres.';
+            }
+            
+            alert(errorMessage);
+        }
     });
 });
