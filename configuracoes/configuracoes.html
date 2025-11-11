@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="/configuracoes/configuracoes.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="theme-dark"> 
+<body
+    <!-- ** IMPORTANTE: Adicione o script de proteção AQUI ** -->
+    <script type="module" src="../auth-guard.js"></script> 
+    <!-- O caminho é '../auth-guard.js' porque a página está em 'home/' e o script está na raiz. -->
+    class="theme-dark"> 
     
     <nav class="navbar">
         <div class="logo">Literary</div>
@@ -109,4 +113,5 @@
     
     <script src="/configuracoes/configuracoes.js"></script> 
 </body>
+
 </html>
