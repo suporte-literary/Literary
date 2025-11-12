@@ -1,71 +1,51 @@
-// formulario/formulario.js
+// script.js (LÓGICA DE LOGIN COM FIREBASE)
 
-// Importar as ferramentas necessárias
-import { auth, db } from '../firebase-config.js'; 
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+// Imports necessários para o Login
+// Ajuste o caminho se o firebase-config.js não estiver na raiz do projeto (./)
+import { auth } from './firebase-config.js'; 
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('login-form');
     
-    const registerForm = document.getElementById('register-form');
-    
-    // ALTERAÇÃO 1: Agora pega o E-MAIL do novo ID 'email'
+    // ALTERAÇÃO: Agora buscamos o ID 'email' no HTML
     const emailInput = document.getElementById('email'); 
-    
-    // ALTERAÇÃO 2: Pega o NOME DE USUÁRIO do ID 'username'
-    const usernameInput = document.getElementById('username');
-    
     const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirm-password');
     
-    // Removido o 'fullNameInput'
-    
-    registerForm.addEventListener('submit', async (e) => {
+    // --- LÓGICA DE LOGIN REAL COM FIREBASE ---
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
-        const username = usernameInput.value.trim(); // Novo: Agora coletamos o username
-        
-        // Verificação se os campos estão preenchidos
-        if (!email || !password || !username) {
-            alert('❌ Por favor, preencha todos os campos obrigatórios.');
-            return;
-        }
 
-        if (password !== confirmPasswordInput.value.trim()) {
-            alert('❌ As senhas não coincidem!');
+        if (email === '' || password === '') {
+            alert('❌ Por favor, preencha todos os campos (E-mail e Senha).');
             return;
         }
 
         try {
-            // 1. Criar o Usuário na Autenticação do Firebase (usa email e senha)
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            // Chama a função de login do Firebase
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // 2. Salvar dados adicionais (Perfil) no Firestore usando o UID (ID Único)
-            await setDoc(doc(db, "users", user.uid), {
-                uid: user.uid,
-                email: email, // Usando o e-mail fornecido
-                username: username, // Usando o username fornecido
-                bio: 'Esta é a descrição padrão do seu perfil no Literary.',
-                createdAt: new Date()
-            });
-
-            alert('✅ Cadastro efetuado com sucesso! Redirecionando para o Login.');
-            window.location.href = '../index.html'; 
+            // Sucesso
+            alert('✅ Login bem-sucedido! Redirecionando para a Home...');
+            sessionStorage.setItem('isLoggedIn', 'true');
+            
+            // Redireciona para a página principal (ajuste o caminho se necessário)
+            window.location.href = './home/home.html'; 
 
         } catch (error) {
-            console.error("Erro de Cadastro:", error.code, error.message);
-            let errorMessage = "Ocorreu um erro ao registrar. Tente novamente.";
+            console.error("Erro de Login:", error.code, error.message);
             
-            // Tratamento de erros de autenticação
-            if (error.code === 'auth/email-already-in-use') {
-                errorMessage = '📧 Este e-mail já está em uso.';
+            let errorMessage = "E-mail ou senha incorretos. Tente novamente.";
+            
+            // Tratamento de erros comuns do Firebase
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                errorMessage = '🔑 E-mail ou Senha inválidos. Verifique suas credenciais.';
             } else if (error.code === 'auth/invalid-email') {
                 errorMessage = 'O formato do e-mail é inválido.';
-            } else if (error.code === 'auth/weak-password') {
-                errorMessage = '🔒 A senha deve ter pelo menos 6 caracteres.';
             }
             
             alert(errorMessage);
