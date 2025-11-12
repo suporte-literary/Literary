@@ -1,65 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro | Literary</title>
-    <link rel="stylesheet" href="formulario.css"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Literary</title>
+    <link rel="stylesheet" href="formulario.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="theme-dark"> 
-    
-    <nav class="navbar">
-        <div class="logo">Literary</div>
-        <ul class="nav-links">
-            <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-            <li class="active"><a href="formulario.html"><i class="fas fa-user-plus"></i> Registrar</a></li>
-        </ul>
-    </nav>
-    
-    <main class="wrapper">
-        <div class="register-card">
-            
-            <h2 class="welcome-text">Crie sua conta Literary</h2>
+<body class="theme-dark"> 
+    
+    <nav class="navbar">
+        <div class="logo">Literary</div>
+        <ul class="nav-links">
+            <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li class="active"><a href="formulario.html"><i class="fas fa-user-plus"></i> Registrar</a></li>
+        </ul>
+    </nav>
+    
+    <main class="wrapper">
+        <div class="register-card">
+            
+            <h2 class="welcome-text">Crie sua conta Literary</h2>
 
-            <form id="register-form">
-                
-                <div class="form-group">
-                    <label for="email"><i class="fas fa-envelope"></i> E-mail</label>
-                    <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
-                </div>
+            <form id="register-form">
+                
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> E-mail</label>
+                    <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+                </div>
 
-                <div class="form-group">
-                    <label for="username"><i class="fas fa-user"></i> Nome de Usuário (único)</label>
-                    <input type="text" id="username" placeholder="@usuario_exclusivo" required>
-                    <small id="username-status" class="validation-message"></small>
-                </div>
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Nome de Usuário (único)</label>
+                    <input type="text" id="username" placeholder="@usuario_exclusivo" required>
+                    <small id="username-status" class="validation-message"></small>
+                </div>
 
-                <div class="form-group">
-                    <label for="password"><i class="fas fa-lock"></i> Senha</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
-                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Senha</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
 
-                <div class="form-group">
-                    <label for="confirm-password"><i class="fas fa-lock"></i> Confirmar Senha</label>
-                    <input type="password" id="confirm-password" placeholder="Repita a senha" required>
-                    <small id="password-match-status" class="validation-message"></small>
-                </div>
+                <div class="form-group">
+                    <label for="confirm-password"><i class="fas fa-lock"></i> Confirmar Senha</label>
+                    <input type="password" id="confirm-password" placeholder="Repita a senha" required>
+                    <small id="password-match-status" class="validation-message"></small>
+                </div>
 
-                <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Registrar</button>
-            </form>
+                <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Registrar</button>
+            </form>
 
-            <div class="footer-links">
-                <p>Já tem uma conta? <a href="../index.html" class="link-primary">Faça Login</a></p>
-            </div>
-            
-        </div>
-    </main>
+            <div class="footer-links">
+                <p>Já tem uma conta? <a href="../index.html" class="link-primary">Faça Login</a></p>
+            </div>
+            
+        </div>
+    </main>
 
-    <footer>
-        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
-    </footer>
-
-    <script src="formulario.js"></script> 
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+    
+        <script type="module" src="../firebase-config.js"></script>
+    <script type="module" src="formulario.js"></script> 
 </body>
 </html>
