@@ -1,35 +1,54 @@
+// script.js (LÓGICA DE LOGIN COM FIREBASE)
+
+// Imports necessários para o Login
+// Ajuste o caminho se o firebase-config.js não estiver na raiz do projeto (./)
+import { auth } from './firebase-config.js'; 
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
-    const usernameInput = document.getElementById('username'); // Alterado
+    
+    // ALTERAÇÃO: Agora buscamos o ID 'email' no HTML
+    const emailInput = document.getElementById('email'); 
     const passwordInput = document.getElementById('password');
     
-    // --- LÓGICA DE LOGIN SIMULADA ---
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Impede o envio padrão do formulário
+    // --- LÓGICA DE LOGIN REAL COM FIREBASE ---
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        if (username === '' || password === '') {
-            alert('Por favor, preencha todos os campos (Nome de Usuário e Senha).');
+        if (email === '' || password === '') {
+            alert('❌ Por favor, preencha todos os campos (E-mail e Senha).');
             return;
         }
 
-        // Simulação de verificação de credenciais. Use um nome de usuário de teste.
-        
-        if (username === 'test_user' && password === '123456') {
+        try {
+            // Chama a função de login do Firebase
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
             // Sucesso
-            alert('Login bem-sucedido! Redirecionando para a Home...');
-            
-            // Simulação de sessão iniciada
+            alert('✅ Login bem-sucedido! Redirecionando para a Home...');
             sessionStorage.setItem('isLoggedIn', 'true');
             
-            // Redireciona para a página principal
-            window.location.href = '/home/home.html'; 
+            // Redireciona para a página principal (ajuste o caminho se necessário)
+            window.location.href = './home/home.html'; 
 
-        } else {
-             // Simulação de erro
-            alert('Nome de Usuário ou Senha incorretos. Tente novamente.');
+        } catch (error) {
+            console.error("Erro de Login:", error.code, error.message);
+            
+            let errorMessage = "E-mail ou senha incorretos. Tente novamente.";
+            
+            // Tratamento de erros comuns do Firebase
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                errorMessage = '🔑 E-mail ou Senha inválidos. Verifique suas credenciais.';
+            } else if (error.code === 'auth/invalid-email') {
+                errorMessage = 'O formato do e-mail é inválido.';
+            }
+            
+            alert(errorMessage);
         }
     });
 });
