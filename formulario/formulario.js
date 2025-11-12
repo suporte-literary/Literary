@@ -1,28 +1,34 @@
 // formulario/formulario.js
+
 // Importar as ferramentas necessárias
-// O '..' é porque o firebase-config.js está na raiz, e este arquivo está em 'formulario/'
 import { auth, db } from '../firebase-config.js'; 
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Certifique-se de que os IDs dos inputs correspondem aos IDs no seu formulario.html
+    
     const registerForm = document.getElementById('register-form');
     
-    // Assumimos que o campo 'username' está sendo usado para o EMAIL, e 'full-name' para o nome de exibição.
-    const emailInput = document.getElementById('username'); 
+    // ALTERAÇÃO 1: Agora pega o E-MAIL do novo ID 'email'
+    const emailInput = document.getElementById('email'); 
+    
+    // ALTERAÇÃO 2: Pega o NOME DE USUÁRIO do ID 'username'
+    const usernameInput = document.getElementById('username');
+    
     const passwordInput = document.getElementById('password');
     const confirmPasswordInput = document.getElementById('confirm-password');
-    const fullNameInput = document.getElementById('full-name');
+    
+    // Removido o 'fullNameInput'
     
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
-        const fullName = fullNameInput.value.trim();
+        const username = usernameInput.value.trim(); // Novo: Agora coletamos o username
         
-        if (!email || !password || !fullName) {
+        // Verificação se os campos estão preenchidos
+        if (!email || !password || !username) {
             alert('❌ Por favor, preencha todos os campos obrigatórios.');
             return;
         }
@@ -33,23 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // 1. Criar o Usuário na Autenticação do Firebase (email e senha)
+            // 1. Criar o Usuário na Autenticação do Firebase (usa email e senha)
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // 2. Salvar dados adicionais (Perfil) no Firestore usando o UID (ID Único) do Firebase
+            // 2. Salvar dados adicionais (Perfil) no Firestore usando o UID (ID Único)
             await setDoc(doc(db, "users", user.uid), {
                 uid: user.uid,
-                email: email,
-                fullName: fullName,
-                // Define um username inicial simples para exibição (ex: joao@literary.com -> joao)
-                username: email.split('@')[0], 
+                email: email, // Usando o e-mail fornecido
+                username: username, // Usando o username fornecido
                 bio: 'Esta é a descrição padrão do seu perfil no Literary.',
                 createdAt: new Date()
             });
 
             alert('✅ Cadastro efetuado com sucesso! Redirecionando para o Login.');
-            // Redireciona para a tela de Login (presumivelmente na raiz, como index.html)
             window.location.href = '../index.html'; 
 
         } catch (error) {
