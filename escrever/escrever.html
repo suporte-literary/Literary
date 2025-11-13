@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <script src="/caminho/para/Auth.js"></script> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literary | Escrever</title>
+    <link rel="stylesheet" href="/escrever/escrever.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <script>
+        window.onload = function() {
+            // Este deve ser o primeiro código a ser executado
+            checkAuth(); 
+            // O resto da inicialização da página pode vir aqui ou no arquivo JS principal
+            loadPreferences(); 
+            loadBookContent(); 
+        };
+    </script>
+
+    <script src="leitura.js"></script>
+
+    <nav class="navbar">
+        <div class="logo">Literary</div>
+        <ul class="nav-links">
+            <li><a href="/Home/Home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/Perfil/Perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
+            <li><a href="/Chat/chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+            <li class="active"><a href="/escrever/escrever.html"><i class="fas fa-pen"></i> Escrever</a></li>
+            <li><a href="/Obras/obras.html"><i class="fas fa-book"></i> Minhas Obras</a></li>
+            <li class="active"><a href="/Rascunhos/rascunhos.html"><i class="fas fa-file-alt"></i> Rascunhos</a></li>
+            <li><a href="#"><i class="fas fa-book-open"></i> Biblioteca</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> Notificações</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contato</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> Política</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Pesquisar livros, autores..." />
+            <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <main class="editor-container">
+        <div class="editor-box">
+            
+            <div class="stepper" id="main-stepper">
+                <div class="step active" id="step1">Nova Obra</div>
+                <div class="step" id="step2">Inserir Capítulo</div>
+            </div>
+
+            <div id="etapa-obra" class="editor-stage">
+                <h2>Detalhes da Obra</h2>
+
+                <div class="cover-upload-area">
+                    <label for="capaObra" class="cover-placeholder" id="coverPlaceholder">
+                        <i class="fas fa-camera"></i>
+                        <span>Clique para adicionar Capa (2:3)</span>
+                        <img id="capaPreview" src="" alt="Pré-visualização da Capa" style="display: none;">
+                    </label>
+                    <input type="file" id="capaObra" accept="image/*" style="display: none;">
+                </div>
+                <input type="text" id="tituloObra" placeholder="Título da Obra (Ex: O Despertar da Lua)..." maxlength="120" />
+                <textarea id="sinopseObra" placeholder="Sinopse da Obra (Resumo que aparecerá na sua página inicial)..."></textarea>
+
+                <div class="metadata-fields">
+                    <input type="text" id="tagsObra" placeholder="Tags (Ex: Aventura, Magia, Romance Jovem. Max: 10 tags)" maxlength="150" />
+                    <div class="field-group">
+                        <select id="generoObra">
+                            <option value="" disabled selected>Selecione o Gênero</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Ficcao">Ficção Científica</option>
+                            <option value="Fantasia">Fantasia</option>
+                            <option value="Poesia">Poesia</option>
+                            <option value="Terror">Terror</option>
+                            <option value="Misterio">Mistério</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+
+                        <select id="idiomaObra">
+                            <option value="" disabled selected>Selecione o Idioma</option>
+                            <option value="Português">Português</option>
+                            <option value="Inglês">Inglês</option>
+                            <option value="Espanhol">Espanhol</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+
+                        <div class="classificacao-idade">
+                            <label>Classificação:</label>
+                            <div class="radio-group">
+                                <input type="radio" id="livre" name="classificacao" value="Livre" checked>
+                                <label for="livre" class="idade-label livre">Livre</label>
+
+                                <input type="radio" id="maior18" name="classificacao" value="+18">
+                                <label for="maior18" class="idade-label maior18">+18</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stage-footer">
+                    <button class="btn avancar" onclick="avancarEtapa()">
+                        Avançar <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="etapa-capitulo" class="editor-stage hidden">
+                <h2>Conteúdo do Capítulo</h2>
+                
+                <input type="text" id="tituloCapitulo" placeholder="Título do Capítulo (Ex: Capítulo 1: O Início da Jornada)..." maxlength="120" />
+                <textarea id="textoCapitulo" placeholder="Comece a escrever o conteúdo do seu capítulo aqui..."></textarea>
+
+                <div class="editor-footer">
+                    <div class="word-count">
+                        <i class="fas fa-feather-alt"></i> <span id="contador">0</span> palavras
+                    </div>
+                    <div class="editor-buttons">
+                        <button class="btn voltar" onclick="voltarEtapa()"><i class="fas fa-chevron-left"></i> Voltar</button>
+                        <button class="btn salvar" onclick="salvarRascunho()"><i class="fas fa-save"></i> Salvar Rascunho</button>
+                        <button class="btn publicar" onclick="publicarObra()"><i class="fas fa-upload"></i> Publicar Obra</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/Escrever/escrever.js"></script> 
+</body>
+</html>

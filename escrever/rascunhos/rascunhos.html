@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literary | Meus Rascunhos</title>
+    <link rel="stylesheet" href="/Obras/obras.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+    <div class="logo">Literary</div>
+    <ul class="nav-links">
+        <li><a href="/Home/Home.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="/Perfil/Perfil.html"><i class="fas fa-user"></i> Perfil</a></li>
+        <li><a href="/Chat/chat.html"><i class="fas fa-comments"></i> Chat</a></li>
+        <li><a href="/escrever/escrever.html"><i class="fas fa-pen"></i> Escrever</a></li>
+        <li><a href="/Obras/obras.html"><i class="fas fa-book"></i> Minhas Obras</a></li>
+        <li><a href="/rascunhos/rascunhos.html"><i class="fas fa-book"></i> Rascunhos</a></li>
+        
+        <li><a href="#"><i class="fas fa-book-open"></i> Biblioteca</a></li>
+        <li><a href="#"><i class="fas fa-bell"></i> Notificações</a></li>
+        <li><a href="#"><i class="fas fa-envelope"></i> Contato</a></li>
+        <li><a href="#"><i class="fas fa-info-circle"></i> Política</a></li>
+        <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+    </ul>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Pesquisar livros, autores..." />
+            <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+
+    <main class="obras-container">
+        <h1>Meus Rascunhos</h1>
+        <p class="subtitle" id="rascunhosSubtitle">Continue de onde parou. Seus rascunhos são salvos automaticamente.</p>
+
+        <div class="obras-grid" id="rascunhosList">
+            </div>
+
+        <div class="empty-state" id="emptyState" style="display: none; text-align: center; margin-top: 50px;">
+            <i class="fas fa-save" style="font-size: 3em; color: #64b2f1; margin-bottom: 15px;"></i>
+            <p style="color: #aaa; font-size: 1.1em;">Você não tem nenhum rascunho salvo no momento. Comece a escrever!</p>
+        </div>
+    </main>
+
+    <button class="add-obra" onclick="location.href='/Escrever/escrever.html'">
+        <i class="fas fa-plus"></i> Novo Rascunho
+    </button>
+
+    <div id="coverModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage" alt="Capa ampliada">
+        <div id="caption"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="/Rascunhos/rascunhos.js"></script>
+</body>
+</html>
