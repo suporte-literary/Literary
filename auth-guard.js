@@ -14,7 +14,7 @@ onAuthStateChanged(auth, (user) => {
         // Redireciona o usuário para a página de login (index.html)
         // O 'window.location.origin' garante que funciona em qualquer ambiente (local ou GitHub Pages)
         alert('Seu acesso expirou ou você não está logado. Redirecionando para a tela de Login.');
-        window.location.href = window.location.origin + '/index.html'; 
+        window.location.replace('../index.html');
     } else {
         // Se 'user' NÃO for nulo, o usuário está logado.
         console.log(`Usuário logado: ${user.email} (UID: ${user.uid})`);
