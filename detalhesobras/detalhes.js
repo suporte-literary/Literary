@@ -101,7 +101,7 @@ function loadObraDetails(obraId) {
 
     if (!obra) {
         alert("Erro: Obra não encontrada. Redirecionando para Minhas Obras.");
-        window.location.href = '/Obras/obras.html';
+        window.location.href = '../Obras/obras.html';
         return;
     }
 
@@ -429,3 +429,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // ... O resto do seu código JS original para esta página
 
 });
+
