@@ -1,6 +1,6 @@
 const PUBLICADAS_KEY = 'literary_obras_publicadas';
-const DEFAULT_COVER = '/site/IMG/capa_rpg_mockup.png'; // CORRIGIDO: Usando o caminho da capa mock no HTML
-const TITLE_CHAR_LIMIT = 20; 
+const DEFAULT_COVER = '/site/IMG/capa_rpg_mockup.png';
+const TITLE_CHAR_LIMIT = 20;
 
 let currentChapterId = null;
 
@@ -14,7 +14,7 @@ function handleCoverImageChange(event) {
             capaObraEdit.src = e.target.result; // Exibe a nova capa (URL Base64)
         };
         // Lê o arquivo como URL base64, que pode ser armazenada no localStorage
-        reader.readAsDataURL(file); 
+        reader.readAsDataURL(file);
     }
 }
 
@@ -43,6 +43,34 @@ function getUrlParameter(name) {
 function getCapitulosKey(obraId) {
     return `literary_capitulos_obra_${obraId}`;
 }
+
+// -----------------------------------------------------------------
+// FUNÇÃO ADICIONADA: ATUALIZA O CONTADOR DE CAPÍTULOS NA OBRA PRINCIPAL
+// -----------------------------------------------------------------
+function updateObraChapterCount(obraId) {
+    let obras = JSON.parse(localStorage.getItem(PUBLICADAS_KEY) || '[]');
+    const obraIndex = obras.findIndex(o => o.id === obraId);
+
+    if (obraIndex === -1) {
+        console.error("Erro: Obra não encontrada para atualização de contagem.");
+        return;
+    }
+    
+    // 1. Obtém todos os capítulos salvos para esta obra
+    const capitulosKey = getCapitulosKey(obraId);
+    const capitulosSalvos = JSON.parse(localStorage.getItem(capitulosKey) || '[]');
+    
+    // 2. Conta apenas os capítulos com status 'Publicado'
+    // Esta é a chave para a tela obras.html
+    const publishedCount = capitulosSalvos.filter(cap => cap.status === 'Publicado').length;
+
+    // 3. Atualiza a propriedade 'capitulo' na obra principal
+    obras[obraIndex].capitulo = publishedCount.toString(); 
+
+    // 4. Salva de volta no localStorage
+    localStorage.setItem(PUBLICADAS_KEY, JSON.stringify(obras));
+}
+// FIM FUNÇÃO ADICIONADA
 
 // Configura a tela para o modo "Nova Obra"
 function setupNewObraMode() {
@@ -75,7 +103,7 @@ function setupNewObraMode() {
     document.getElementById('tituloObraEdit').textContent = 'Nova História';
     
     // Define a capa padrão
-    document.getElementById('capaObraEdit').src = DEFAULT_COVER; 
+    document.getElementById('capaObraEdit').src = DEFAULT_COVER;
     
     // Oculta o painel do índice para uma nova obra, pois ainda não há capítulos.
     document.querySelector('.tabs-panel').style.minHeight = 'auto'; // Ajusta altura
@@ -107,10 +135,10 @@ function loadObraDetails(obraId) {
 
     // 1. ATUALIZAR CAPA E TÍTULO
     const capaElement = document.getElementById('capaObraEdit');
-    const tituloElement = document.getElementById('tituloObraEdit'); 
+    const tituloElement = document.getElementById('tituloObraEdit');
     
     // CORRIGIDO: Garante que a capa salva (Base64 URL) seja carregada, ou a default
-    capaElement.src = obra.capaUrl || DEFAULT_COVER; 
+    capaElement.src = obra.capaUrl || DEFAULT_COVER;
     
     // CORREÇÃO: Usa a função de truncagem para exibir o título na capa
     if (tituloElement) {
@@ -132,7 +160,7 @@ function loadObraDetails(obraId) {
 
     // 3. RENDERIZAR O ÍNDICE (CAPÍTULOS)
     const capituloLista = document.querySelector('.capitulo-lista');
-    capituloLista.innerHTML = ''; 
+    capituloLista.innerHTML = '';
     
     const capitulosKey = getCapitulosKey(obraId);
     const capitulosSalvos = JSON.parse(localStorage.getItem(capitulosKey) || '[]')
@@ -167,7 +195,7 @@ function createCapituloItem(capitulo) {
         statusClass = 'rascunho';
         statusText = `Rascunho · Última Edição: ${dataMeta}`;
     } else {
-        statusClass = ''; 
+        statusClass = '';
         statusText = `Não Iniciado · Data: ${dataMeta}`;
     }
     
@@ -221,21 +249,25 @@ function salvarCapitulo(status) {
         capituloData.dataCriacao = capitulosSalvos[existingIndex].dataCriacao;
         capitulosSalvos[existingIndex] = capituloData;
     } else {
-        capituloData.dataCriacao = new Date().toISOString(); 
+        capituloData.dataCriacao = new Date().toISOString();
         capitulosSalvos.push(capituloData);
     }
     
     localStorage.setItem(capitulosKey, JSON.stringify(capitulosSalvos));
     
-    const statusMessage = status === 'Publicado' 
-        ? "Capítulo Publicado com sucesso! 🎉" 
+    // ** CHAMADA DA NOVA FUNÇÃO PARA ATUALIZAR O CONTADOR **
+    updateObraChapterCount(obraId); 
+    // ** FIM DA CHAMADA **
+    
+    const statusMessage = status === 'Publicado'
+        ? "Capítulo Publicado com sucesso! 🎉"
         : "Rascunho salvo. Você pode continuar editando mais tarde.";
         
     alert(statusMessage);
 
     currentChapterId = null;
     fecharNovoCapitulo();
-    loadObraDetails(obraId); 
+    loadObraDetails(obraId);
 }
 
 // -----------------------------------------------------------------
@@ -253,7 +285,7 @@ function abrirNovoCapitulo(chapterId = 'NEW') {
     const capitulosKey = getCapitulosKey(obraId);
     const capitulosSalvos = JSON.parse(localStorage.getItem(capitulosKey) || '[]');
     
-    currentChapterId = chapterId; 
+    currentChapterId = chapterId;
 
     document.getElementById('chapterTitleInput').value = '';
     document.getElementById('chapterContentTextarea').value = '';
@@ -264,18 +296,18 @@ function abrirNovoCapitulo(chapterId = 'NEW') {
             document.getElementById('chapterTitleInput').value = cap.titulo || '';
             document.getElementById('chapterContentTextarea').value = cap.conteudo || '';
         }
-    } 
+    }
 
-    chapterModal.style.display = 'flex'; 
-    document.body.style.overflow = 'hidden'; 
+    chapterModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
     updateWordCount();
 }
 
 function fecharNovoCapitulo() {
     const chapterModal = document.getElementById('chapterModal');
-    chapterModal.style.display = 'none'; 
-    document.body.style.overflow = ''; 
-    currentChapterId = null; 
+    chapterModal.style.display = 'none';
+    document.body.style.overflow = '';
+    currentChapterId = null;
 }
 
 // -----------------------------------------------------------------
@@ -294,8 +326,8 @@ function salvarDetalhes() {
     const capaElement = document.getElementById('capaObraEdit');
     const currentCapaSrc = capaElement.src;
     // Verifica se a capa é a padrão (usa window.location.origin para comparar caminho absoluto)
-    const isDefaultCover = currentCapaSrc.includes(DEFAULT_COVER); 
-    const capaUrlToSave = isDefaultCover ? null : currentCapaSrc; 
+    const isDefaultCover = currentCapaSrc.includes(DEFAULT_COVER);
+    const capaUrlToSave = isDefaultCover ? null : currentCapaSrc;
 
     if (!tituloInput || !sinopse) {
         alert("O Título e a Sinopse são obrigatórios.");
@@ -307,8 +339,8 @@ function salvarDetalhes() {
     let obras = JSON.parse(localStorage.getItem(PUBLICADAS_KEY) || '[]');
     const obraIndex = obras.findIndex(o => o.id === obraId);
 
-    const classificacaoHtml = classificacao === '+18' 
-        ? `<span style="color: #d32f2f; font-weight: 700;">+18</span>` 
+    const classificacaoHtml = classificacao === '+18'
+        ? `<span style="color: #d32f2f; font-weight: 700;">+18</span>`
         : `<span style="color: #43a047; font-weight: 700;">Livre</span>`;
         
     // --- LÓGICA DE INCLUSÃO DE NOVA OBRA ---
@@ -323,10 +355,10 @@ function salvarDetalhes() {
             genero: genero,
             idioma: 'Português', // Assumindo padrão
             classificacao: classificacaoHtml,
-            capitulo: '0', // Inicializa o contador de capítulos
+            capitulo: '0', // Inicializa o contador como '0'
             dataPublicacao: new Date().toLocaleDateString('pt-BR'),
             // Salva a capaUrl (Base64 ou null se for a padrão)
-            capaUrl: capaUrlToSave 
+            capaUrl: capaUrlToSave
         };
         
         obras.push(novaObra);
@@ -353,7 +385,7 @@ function salvarDetalhes() {
         alert("Detalhes da História gravados com sucesso!");
         
         // Recarrega os detalhes para atualizar o display
-        loadObraDetails(obraId); 
+        loadObraDetails(obraId);
     }
 }
 
@@ -429,4 +461,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // ... O resto do seu código JS original para esta página
 
 });
-
