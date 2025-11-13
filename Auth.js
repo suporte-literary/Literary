@@ -1,7 +1,7 @@
 // Auth.js
 
 const USER_DATA_KEY = 'user_data';
-const REDIRECT_URL = '/Login/Login.html'; // URL para onde redirecionar se não estiver logado
+const REDIRECT_URL = '../index/index.html'; // URL para onde redirecionar se não estiver logado
 
 /**
  * 🔐 Verifica o estado de login e redireciona se o usuário não estiver logado.
@@ -47,4 +47,5 @@ function logout() {
 // Se não estiver usando módulos, as funções serão globais e acessíveis diretamente.
 // Exemplo de uso:
 // window.addEventListener('load', checkAuth); 
+
 // document.getElementById('logoutBtn').addEventListener('click', logout);
