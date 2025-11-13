@@ -21,6 +21,9 @@ function createObraCard(obra) {
     const tagsArray = obra.tags ? obra.tags.split(/[,;]/).map(tag => tag.trim()).filter(tag => tag.length > 0) : [];
     const tagsHtml = tagsArray.map(tag => `<span class="tag">${tag}</span>`).join('');
 
+    // Garante que o contador de capítulos seja um número
+    const capitulosPublicados = obra.capitulo ? parseInt(obra.capitulo) : 0;
+
     card.innerHTML = `
         <div class="cover-area">
             <img src="${coverSrc}" alt="Capa da Obra ${obra.titulo}">
@@ -28,7 +31,7 @@ function createObraCard(obra) {
         
         <div class="content-area">
             <h2>${obra.titulo}</h2>
-            <p class="current-chapter">${obra.capitulo || 0} Capítulos Publicados</p>
+            <p class="current-chapter">${capitulosPublicados} Capítulos Publicados</p>
 
             <div class="metadata">
                 <span><i class="fas fa-list-alt"></i> Gênero: ${obra.genero || 'N/A'}</span>
@@ -72,8 +75,10 @@ function renderObras() {
         emptyState.style.display = 'block';
     } else {
         emptyState.style.display = 'none';
-        obrasList.style.display = 'flex'; // Mudança para flex ou mantendo o grid 1fr
+        obrasList.style.display = 'flex'; // Mantém o display grid ou flex
         obrasList.style.flexDirection = 'column'; // Organiza os cards atualizados verticalmente
+        
+        // A chave aqui é iterar sobre TODAS as obras salvas
         obras.forEach(obra => {
             obrasList.appendChild(createObraCard(obra));
         });
@@ -100,22 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- Funções de Ação e CRUD (Atualizadas) ---
 
-// Funções de CRUD (Simuladas)
+// CORRIGIDO: Redireciona para a tela de detalhes/edição da obra
 function visualizarObra(id) {
-    const obras = JSON.parse(localStorage.getItem(PUBLICADAS_KEY));
-    const obra = obras.find(o => o.id === id);
-    if (obra) {
-        // Exibe um resumo da sinopse e conteúdo
-        alert(`Continuar Lendo "${obra.titulo}" - Capítulo: ${obra.capitulo}\n\nSinopse: ${obra.sinopse.substring(0, 100)}...\n\nConteúdo: ${obra.conteudo.substring(0, 100)}...`);
-    }
+    window.location.href = `../detalhesobras/detalhes.html?obraId=${id}`;
 }
 
-// Localize e substitua esta função no seu /Obras/obras.js
-
+// CORRIGIDO: Redireciona para a tela de edição
 function editarObra(id) {
-    // CORREÇÃO: Usando a capitalização da sua pasta (detalhesobras)
-    // e o nome de arquivo completo (detalhes.html)
-    window.location.href = `/detalhesobras/detalhes.html?obraId=${id}`; 
+    window.location.href = `../detalhesobras/detalhes.html?obraId=${id}`; 
 }
 
 function excluirObra(id) {
@@ -128,6 +125,10 @@ function excluirObra(id) {
         let library = JSON.parse(localStorage.getItem(LIBRARY_KEY) || '[]');
         library = library.filter(libId => libId !== id);
         localStorage.setItem(LIBRARY_KEY, JSON.stringify(library));
+        
+        // IMPORTANTE: Remove os capítulos da obra também! (Adicionado)
+        const capitulosKey = `literary_capitulos_obra_${id}`;
+        localStorage.removeItem(capitulosKey);
         
         renderObras();
         alert("Obra excluída com sucesso.");
@@ -169,7 +170,7 @@ function toggleLibrary(id) {
     
     localStorage.setItem(LIBRARY_KEY, JSON.stringify(library));
     // Re-renderiza para atualizar o estado dos botões de todas as obras
-    renderObras(); 
+    renderObras();
 }
 
 
@@ -192,7 +193,7 @@ function openModal(e) {
     modal.style.display = "block";
     modalImg.src = img.src;
     // Pega o H2 do card
-    caption.innerText = img.closest('.obra-card').querySelector('h2').textContent; 
+    caption.innerText = img.closest('.obra-card').querySelector('h2').textContent;
 }
 
 function closeModal() {
@@ -225,8 +226,8 @@ window.adicionarObraPublicada = function(data) {
         classificacao: data.classificacaoObra === '+18' 
             ? `<span style="color: #d32f2f; font-weight: 700;">+18</span>` 
             : `<span style="color: #43a047; font-weight: 700;">Livre</span>`,
-        capitulo: data.tituloCapitulo,
-        conteudo: data.conteudoCapitulo,
+        capitulo: '1', // Se for adicionada por aqui, tem 1 capítulo (se a tela 'Escrever' publicar um)
+        // conteudo: data.conteudoCapitulo, // Removido: Conteúdo do capítulo deve ser salvo separadamente
         dataPublicacao: new Date().toLocaleDateString('pt-BR'),
         capaUrl: data.capaBase64 || DEFAULT_COVER
     };
@@ -247,5 +248,7 @@ window.adicionarObraPublicada = function(data) {
 
 document.addEventListener("DOMContentLoaded", renderObras);
 // Torna as novas funções de biblioteca públicas para o HTML
-
 window.toggleLibrary = toggleLibrary;
+window.editarObra = editarObra; // Garante que a função de editar esteja global
+window.excluirObra = excluirObra;
+window.visualizarObra = visualizarObra;
