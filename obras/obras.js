@@ -28,7 +28,7 @@ function createObraCard(obra) {
         
         <div class="content-area">
             <h2>${obra.titulo}</h2>
-            <p class="current-chapter">Último Capítulo: ${obra.capitulo}</p>
+            <p class="current-chapter">${obra.capitulo || 0} Capítulos Publicados</p>
 
             <div class="metadata">
                 <span><i class="fas fa-list-alt"></i> Gênero: ${obra.genero || 'N/A'}</span>
@@ -247,4 +247,5 @@ window.adicionarObraPublicada = function(data) {
 
 document.addEventListener("DOMContentLoaded", renderObras);
 // Torna as novas funções de biblioteca públicas para o HTML
+
 window.toggleLibrary = toggleLibrary;
