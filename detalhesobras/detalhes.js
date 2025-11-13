@@ -335,7 +335,7 @@ function salvarDetalhes() {
         alert("Nova História criada com sucesso! Agora você pode adicionar capítulos.");
         
         // Redireciona para a mesma página, mas agora no modo EDIÇÃO da nova obra
-        window.location.href = `/detalhesobras/detalhes.html?obraId=${novoId}`;
+        window.location.href = `../detalhesobras/detalhes.html?obraId=${novoId}`;
         return;
 
     // --- LÓGICA DE EDIÇÃO DE OBRA EXISTENTE ---
@@ -427,4 +427,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     // ... O resto do seu código JS original para esta página
+
 });
