@@ -29,47 +29,65 @@
         </div>
     </nav>
 
-    <main class="wrapper">
-        <div class="profile-container">
-            
-            <header class="profile-header">
-                <div class="avatar-box">
-                    <!-- ID para futuro carregamento de avatar -->
-                    <img id="profile-avatar-display" src="/caminho/para/avatar_padrao.png" alt="Foto de Perfil do Usuário" class="profile-avatar-img">
+   <main class="wrapper">
+    <div class="profile-container">
+        <header class="profile-header">
+            <div class="avatar-box">
+                <img id="profile-avatar-display" src="/caminho/para/avatar_padrao.png" alt="Foto de Perfil" class="profile-avatar-img">
+            </div>
+
+            <div class="profile-info">
+                <h1 id="user-display-name" class="profile-name">Nome do Usuário</h1>
+                <p id="user-username" class="profile-username">@usuario_literary</p>
+                
+                <div class="profile-stats">
+                    <div class="stat-item"><strong>12</strong><span>Obras</span></div>
+                    <div class="stat-item"><strong>1.2k</strong><span>Seguidores</span></div>
+                    <div class="stat-item"><strong>450</strong><span>Lendo</span></div>
                 </div>
 
-                <div class="profile-info">
-                    <!-- ID para carregar o nome completo (fullName) do Firestore -->
-                    <h1 id="user-display-name" class="profile-name">Nome do Usuário</h1>
-                    
-                    <!-- ID para carregar o nome de usuário (username) do Firestore -->
-                    <p id="user-username" class="profile-username">@usuario_literary</p>
-
+                <div class="profile-actions">
                     <a href="../configuracoes/configuracoes.html" class="btn-edit-profile">
-                        <i class="fas fa-cog"></i> Editar Perfil
+                        <i class="fas fa-edit"></i> Editar Perfil
                     </a>
+                    <button class="btn-share"><i class="fas fa-share-alt"></i></button>
                 </div>
-            </header>
+            </div>
+        </header>
 
-            <section class="profile-bio-section">
-                <h2 class="section-title"><i class="fas fa-quote-left"></i> Biografia</h2>
-                <!-- ID para carregar a biografia (bio) do Firestore -->
-                <p id="user-bio" class="profile-description">
-                    Esta é a descrição atual do seu perfil.
-                </p>
-            </section>
+        <section class="profile-bio-section">
+            <h2 class="section-title"><i class="fas fa-feather-alt"></i> Sobre o Autor</h2>
+            <p id="user-bio" class="profile-description">
+                Escrevendo mundos, um capítulo por vez. Amante de café e fantasia épica.
+            </p>
+        </section>
+        
+        <hr class="divider">
+
+        <section class="profile-content-tabs">
+            <div class="tabs-header">
+                <h2 class="section-title"><i class="fas fa-book-open"></i> Minhas Obras</h2>
+                <button class="btn-add-work"><i class="fas fa-plus"></i> Nova Obra</button>
+            </div>
             
-            <hr class="divider">
-
-            <section class="profile-content-tabs">
-                <h2 class="section-title"><i class="fas fa-book-open"></i> Minhas Obras (Simulação)</h2>
-                <div class="content-list">
-                    <p style="color: #aaa;">As obras publicadas e em rascunho aparecerão aqui.</p>
+            <div class="works-grid">
+                <div class="book-card">
+                    <div class="book-cover-placeholder">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="book-card-info">
+                        <h3>O Vale do Silêncio</h3>
+                        <p>Fantasia • 85%</p>
+                    </div>
                 </div>
-            </section>
-
-        </div>
-    </main>
+                <div class="book-card empty">
+                    <i class="fas fa-plus"></i>
+                    <p>Adicionar</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
 
     <footer>
         <p>&copy; 2025 Literary. Todos os direitos reservados.</p>
